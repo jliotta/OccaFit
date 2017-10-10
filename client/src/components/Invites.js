@@ -15,7 +15,7 @@ class Invites extends Component {
       .then(response => response.json()
         .then(
           response => {
-            this.setState({ requests: response });
+            this.setState({ invites: response });
             console.log(response);
           }
         )
