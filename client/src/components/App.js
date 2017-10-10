@@ -8,6 +8,7 @@ import Signup from './Signup';
 import Listings from './Listings';
 import NoMatch from './NoMatch';
 import Dashboard from './Dashboard';
+import Profile from './Profile';
 import CreateListing from './CreateListing';
 import data from '../sampleData';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
@@ -25,6 +26,7 @@ class App extends Component {
     this.cookies = new Cookies();
     console.log('checking auth...');
     this.checkAuth();
+    console.log("HELLO!!!!!")
   }
   
   checkAuth = () => {
@@ -87,6 +89,10 @@ class App extends Component {
 
             <Route exact path='/dashboard' render={props => (
               <Dashboard listings={data} {...props} />
+            )} />
+
+            <Route exact path='/profile' render={props => (
+              <Profile />
             )} />
 
             <Route exact path='/create' render={props => (
