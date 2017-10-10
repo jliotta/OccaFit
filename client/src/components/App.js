@@ -5,6 +5,7 @@ import Home from './Home';
 import About from './About';
 import Login from './Login';
 import Signup from './Signup';
+import Setup from './Setup';
 import Listings from './Listings';
 import NoMatch from './NoMatch';
 import Dashboard from './Dashboard';
@@ -86,6 +87,10 @@ class App extends Component {
             )} />
 
             <Route exact path='/signup' component={Signup} />
+
+            <Route exact path='/setup' render={props => (
+              <Setup />
+            )} />
 
             <Route exact path='/dashboard' render={props => (
               <Dashboard listings={data} {...props} />

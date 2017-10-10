@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Container, Image, List } from 'semantic-ui-react';
 
 class ProfilePic extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
@@ -12,7 +15,7 @@ class ProfilePic extends Component {
         <Container style={{"textAlign": "center"}}>
           <List style={{margin: '10px'}}>
             <List.Item>
-              <List.Header>My Dashboard</List.Header>
+              <List.Header>{this.props.details}</List.Header>
             </List.Item>
           </List>
         </Container>

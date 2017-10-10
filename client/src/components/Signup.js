@@ -49,7 +49,7 @@ class Signup extends Component {
     fetch('/register', options)
       .then(response => {
         if (response.ok) {
-          this.props.history.replace('/login');
+          this.props.history.replace('/setup');
         } else {
           this.setState({
             errorHeader: 'User already exists',
