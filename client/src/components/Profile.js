@@ -9,7 +9,6 @@ class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-<<<<<<< HEAD
 			info: null
 		}
 	}
@@ -30,13 +29,17 @@ class Profile extends Component {
       })
     }
 
-    componentDidMount(){
-      this.pullAboutMeData();
-    }
+   componentDidMount(){
+     this.pullAboutMeData();
+  }
+
+  images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
+
+  user = '/' + this.images[Math.floor(Math.random() * this.images.length)];
 
 	render() {
 		return (
-			<Container id="profile">
+			<Container style={{marginTop: '20px'}} id="profile">
 				<h1> THIS IS YOUR PROFILE </h1>
 				<ProfilePic user={this.user} details={this.state.details}/>
 				<Activities />
