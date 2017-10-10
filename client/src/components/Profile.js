@@ -11,12 +11,12 @@ class Profile extends Component {
 
 	render() {
 		return (
-			<div id="profile">
+			<Container style={{marginTop: '20px'}} id="profile">
 				<h1> THIS IS YOUR PROFILE </h1>
 				<Activities />
 				<AboutMe />
 				<Friends />
-			</div>
+			</Container>
 		)
 	}
 }

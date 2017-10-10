@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt');
 var connection = mysql.createConnection({
   host: process.env.DBSERVER || 'localhost',
   user: process.env.DBUSER || 'root',
-  password: process.env.DBPASSWORD || '',
+  password: process.env.DBPASSWORD || 'plantlife',
   database : 'fitbud'
 });
 
@@ -54,12 +54,12 @@ var comparePassword = function(passwordEntered, hash, callback) {
 		if (err) throw err;
 		callback(null, isMatch)
 	});
-	
+
 };
 
 var findById = function(id, callback) {
 	console.log('database finding by id');
-	
+
 	var query = 'SELECT * from users WHERE id = ?';
 	connection.query(query, [id], function(err, dbResultArr){
 		if (err) {
@@ -69,7 +69,7 @@ var findById = function(id, callback) {
 			callback(null, dbResultArr[0]);
 		}
 	})
-	
+
 }
 
 var getWorkouts = function(id, callback) {
@@ -81,7 +81,7 @@ var getWorkouts = function(id, callback) {
 
 	connection.query(query, [id], (err, result) => {
 		if (err) {
-			console.log('error getting postings');
+			console.error('Error getting postings', err);
 		} else {
 			console.log('DB POSTING RESULTS:', result);
 			callback(result);
@@ -131,14 +131,14 @@ var createProfile = function(profileObj, callback) {
 
 
 
-// send back user requests (accepts and pendings) by postings id 
+// send back user requests (accepts and pendings) by postings id
 var getUserPostings = function(userId, callback) {
-	
+
 	var query = 'select * from postings where userId=?';
 	// var query = 'select p.location, p.date, p.duration, p.details from postings p where userId=?'
 	connection.query(query, [userId], (err, result) => {
 		if (err) {
-			console.log('error getting posting by userId');
+			console.log('error getting posting by userId', err);
 		} else {
 			console.log('success posting by userId:', result);
 			callback(result);
@@ -161,7 +161,7 @@ var getRequestsByPostingId = function(postingId, callback) {
 
 var getUserRequestPostings = function(userId, callback) {
 //title, loation, date, duration
-	var query = 'select p.location, p.date, p.duration, p.details from requests r left join postings p on r.postingId = p.id where r.status = "pending" and r.userId = ?';
+	var query = 'select * from requests r left join postings p on r.postingId = p.id where r.status = "pending" and r.userId = ?';
 	connection.query(query, [userId], (err, result) => {
 		if (err) {
 			console.log('error getting requests by userId');
@@ -197,7 +197,7 @@ var createPair = function(requestObj, callback) {
 };
 
 var getUserAcceptPostings = function(userId, callback) {
-	var query = 'select p.location, p.date, p.duration, p.details from requests r left join postings p on r.postingId = p.id where r.UserId = ? and r.status = ?';
+	var query = 'select * from requests r left join postings p on r.postingId = p.id where r.UserId = ? and r.status = ?';
 	connection.query(query, [userId, 'accept'], (err, result) => {
 		if (err) {
 			console.log('error getting accepted requests');
@@ -240,6 +240,3 @@ module.exports = {
 	getRequestsByPostingId,
 	updateRequest
 };
-
-
-

@@ -18,7 +18,7 @@ var options = {
   host: process.env.DBSERVER || 'localhost',
   port: 3306,
   user: process.env.DBUSER || 'root',
-  password: process.env.DBPASSWORD || '',
+  password: process.env.DBPASSWORD || 'plantlife',
   database: 'fitbud',
   checkExpirationInterval: 60000,
   expiration: 3600000,
@@ -37,7 +37,7 @@ var routeWorkout = require('../routes/workout');
 var routeDashboard = require('../routes/dashboard');
 var routeLogout = require('../routes/logout');
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('build'));
 app.use(session({
@@ -77,7 +77,7 @@ app.use('/logout', routeLogout);
 // middleware function to check if this is one of the protected routes
 
 function checkAuth(req, res, next) {
-  if (req.isAuthenticated()) { //check if it's an authenticated route 
+  if (req.isAuthenticated()) { //check if it's an authenticated route
     next();
   }
   else {
@@ -95,5 +95,5 @@ app.listen(process.env.PORT || 3001, function(err){
 })
 
 
-// express session 
+// express session
 // express validator

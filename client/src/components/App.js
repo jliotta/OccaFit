@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';                                                                                                                                      
+import Cookies from 'universal-cookie';
 import MainNav from './MainNav';
 import Home from './Home';
 import About from './About';
@@ -28,7 +28,7 @@ class App extends Component {
     this.checkAuth();
     console.log("HELLO!!!!!")
   }
-  
+
   checkAuth = () => {
     fetch('/profile', {
       credentials: 'include'
@@ -68,13 +68,13 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated} 
+          <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated}
                    signoff={this.handleSignOff} user={this.state.user} />
           <Switch>
             <Route exact path='/' render={props => (
               <Home user={this.state.user} visible={this.state.visible} {...props} />
             )} />
-            
+
             <Route exact path='/listings' render={props => (
               <Listings {...props} user={this.state.user} />
             )} />
@@ -92,7 +92,7 @@ class App extends Component {
             )} />
 
             <Route exact path='/profile' render={props => (
-              <Profile />
+              <Profile user={this.state.user} {...props}/>
             )} />
 
             <Route exact path='/create' render={props => (
