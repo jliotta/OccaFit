@@ -12,8 +12,6 @@ class Login extends Component {
       email: '',
       password: ''
     }
-
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -67,7 +65,6 @@ class Login extends Component {
   }
 
   handleInputChange = (event) => {
-    console.log(`${event.target.name} is changing to ${event.target.value}`);
     this.setState({
       [event.target.name]: event.target.value
     })

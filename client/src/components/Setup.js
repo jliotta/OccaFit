@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Modal, Header, Button, Image, Icon, Form, TextArea} from 'semantic-ui-react';
+import { Modal, Header, Button, Icon, Form, TextArea, Select} from 'semantic-ui-react';
+
+var states = [`AL`, `AK`, `AZ`, `AR`, `CA`, `CO`, `CT`, `DE`, `DC`, `FL`, `GA`, `HI`, `ID`, `IL`, `IN`, `IA`, `KS`, `KY`, `LA`, `ME`, `MD`, 
+`MA`, `MI`, `MN`, `MS`, `MO`, `MT`, `NE`, `NV`, `NH`, `NJ`, `NM`, `NY`, `NC`, `ND`, `OH`, `OK`, `OR`, `PA`, `RI`, `SC`, `SD`, `TN`, `TX`,
+`UT`, `VT`, `VA`, `WA`, `WV`, `WI`, `WY`];
+
+states = states.map(state => {
+  var obj = {};
+  obj.key = state;
+  obj.text = state;
+  obj.value = state;
+  return obj;
+});
 
 class Setup extends Component {
 	constructor(props) {
@@ -26,7 +38,7 @@ class Setup extends Component {
         <Form.Group widths='equal'>
           <Form.Input label='Email' placeholder='Email' />
           <Form.Input label='City' placeholder='City' />
-          <Form.Input label='State' placeholder='State' />
+          <Form.Field control={Select} label='State' options={states} placeholder='State' />
         </Form.Group>
         <Form.Field control={TextArea} label='About' placeholder='Tell us more about you...' />
         </Form>

@@ -11,6 +11,7 @@ class Profile extends Component {
 		this.state = {
 			details: 'Contact Details'
 		}
+		console.log('PROPS:', this);
 	}
 
 	images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];

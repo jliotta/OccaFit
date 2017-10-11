@@ -25,26 +25,22 @@ class App extends Component {
     }
 
     this.cookies = new Cookies();
-    console.log('checking auth...');
     this.checkAuth();
-    console.log("HELLO!!!!!")
   }
 
   checkAuth = () => {
     fetch('/profile', {
       credentials: 'include'
     }).then(response => {
-      console.log(response);
       return response.ok ? response.json() : {};
     }).then(user => {
-      console.log(user);
       if (user && user.name) {
         this.setState({
           user: user,
           authenticated: true
-        })
+        });
       }
-    })
+    });
   }
 
   handleAuthenticated = (user) => {
@@ -53,6 +49,7 @@ class App extends Component {
       user: user
     });
     console.log('User authenticated...');
+    console.log('USER:', this.state.user);
   }
 
   handleSignOff = () => {
