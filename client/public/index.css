@@ -12,10 +12,9 @@ body {
 	text-align: center;
 }
 
-#activities, #about-me, #friends {
+#about-me, #friends {
 	float: left;
 	width: 30%;
-	height: 400px;
 	margin: 15px;
 	border: 5px solid black;
 }

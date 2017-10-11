@@ -5,14 +5,13 @@ var db = require('../database/index.js');
 
 router.get('/', (req, res) => {
   // res.send('RENDER profile page');
-  console.log('user profile', req.user);
+  // console.log('user profile', req.user);
   if (req.user) {
     res.json(req.user);
   } else {
     res.json({});
   }
 });
-
 // grabs About Me info for the profile page
 router.get('/about', (req, res) => {
   console.log('in the PROFILE ROUTER')
@@ -20,8 +19,29 @@ router.get('/about', (req, res) => {
   var id = req.user.id;
   db.getAboutMe(id, (result) => {
     console.log('about to send response')
-    res.send(result[0])
+    res.send(result)
   })
+})
+
+router.get('/activities', (req, res) => {
+  // Get all of this user's data
+  // Get all of the upcoming events for this user also
+  // Display them in chronological order
+  // console.log('ACTIVITIES GET REQUEST', req.user);
+  db.getUserPostings(req.user.id, userPosts => {
+    db.getUserAcceptPostings(req.user.id, acceptedPosts => {
+      console.log('UserPosts:', userPosts.sort(function(o){ return new Date( o.date ) }));
+      console.log('AcceptedPosts:', acceptedPosts.sort(function(o){ return new Date( o.date ) }));
+      var activities = {
+        hosted: userPosts,
+        attended: acceptedPosts
+      };
+      console.log('Activities:', activities);
+      res.send(activities);
+    })
+  })
+  //
+  // db.getUserAcceptPostings()
 })
 
 router.post('/', (req, res) => {
