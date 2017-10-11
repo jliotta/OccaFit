@@ -11,6 +11,7 @@ class Profile extends Component {
 		this.state = {
 			info: null
 		}
+		console.log('PROPS:', this);
 	}
 
 
