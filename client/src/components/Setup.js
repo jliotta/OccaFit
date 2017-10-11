@@ -69,6 +69,19 @@ class Setup extends Component {
       activity: this.state.activity
     }
     console.log('here is my FORM DATA', inputs)
+    //fetch to server as a post request
+    var options = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(inputs)
+    }
+    fetch('/setup', options)
+      .then(results => {
+        console.log(results)
+      })
   }
 
 	render() {
