@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Header, Button, Image, Icon, Form} from 'semantic-ui-react';
+import { Modal, Header, Button, Image, Icon, Form, TextArea} from 'semantic-ui-react';
 
 class Setup extends Component {
 	constructor(props) {
@@ -28,6 +28,7 @@ class Setup extends Component {
           <Form.Input label='City' placeholder='City' />
           <Form.Input label='State' placeholder='State' />
         </Form.Group>
+        <Form.Field control={TextArea} label='About' placeholder='Tell us more about you...' />
         </Form>
 
         <Modal.Actions>
