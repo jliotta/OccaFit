@@ -88,9 +88,7 @@ class App extends Component {
 
             <Route exact path='/signup' component={Signup} />
 
-            <Route exact path='/setup' render={props => (
-              <Setup />
-            )} />
+            <Route exact path='/setup' component={Setup} />
 
             <Route exact path='/dashboard' render={props => (
               <Dashboard listings={data} {...props} />
