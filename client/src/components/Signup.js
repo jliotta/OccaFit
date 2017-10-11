@@ -6,7 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 const styles = {
   root: {
     marginTop: 18,
-    // padding: '0 24px 24px 24px',
+    padding: '0 24px 24px 24px',
   },
 
   customErrorLabel: {
@@ -24,8 +24,6 @@ class Signup extends Component {
       submit: false,
       formData: null
     }
-
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -49,7 +47,7 @@ class Signup extends Component {
     fetch('/register', options)
       .then(response => {
         if (response.ok) {
-          this.props.history.replace('/login');
+          this.props.history.replace('/setup');
         } else {
           this.setState({
             errorHeader: 'User already exists',

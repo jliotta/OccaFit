@@ -5,6 +5,7 @@ import Home from './Home';
 import About from './About';
 import Login from './Login';
 import Signup from './Signup';
+import Setup from './Setup';
 import Listings from './Listings';
 import NoMatch from './NoMatch';
 import Dashboard from './Dashboard';
@@ -24,26 +25,22 @@ class App extends Component {
     }
 
     this.cookies = new Cookies();
-    console.log('checking auth...');
     this.checkAuth();
-    console.log("HELLO!!!!!")
   }
 
   checkAuth = () => {
     fetch('/profile', {
       credentials: 'include'
     }).then(response => {
-      console.log(response);
       return response.ok ? response.json() : {};
     }).then(user => {
-      console.log(user);
       if (user && user.name) {
         this.setState({
           user: user,
           authenticated: true
-        })
+        });
       }
-    })
+    });
   }
 
   handleAuthenticated = (user) => {
@@ -52,6 +49,7 @@ class App extends Component {
       user: user
     });
     console.log('User authenticated...');
+    console.log('USER:', this.state.user);
   }
 
   handleSignOff = () => {
@@ -86,6 +84,8 @@ class App extends Component {
             )} />
 
             <Route exact path='/signup' component={Signup} />
+
+            <Route exact path='/setup' component={Setup} />
 
             <Route exact path='/dashboard' render={props => (
               <Dashboard listings={data} {...props} />
