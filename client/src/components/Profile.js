@@ -10,10 +10,9 @@ class Profile extends Component {
 		super(props);
 		this.state = {
 			info: null
+			details: 'Contact Details'
 		}
-		console.log('PROPS:', this);
 	}
-
 
 	pullAboutMeData() {
     console.log('in pullAboutMeData')

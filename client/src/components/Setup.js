@@ -31,6 +31,10 @@ class Setup extends Component {
 	render() {
 		return (
 			<Modal open={this.state.displaySetup} closeIcon dimmer='blurring'>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 008791c2636d085c7714267f5e90431b3344ac15
         <Modal.Header>WELCOME TO FITBUD</Modal.Header>
         	<p>Please set up your new profile!</p>
         <Form>
