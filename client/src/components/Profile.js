@@ -9,7 +9,7 @@ class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			info: null
+			info: null,
 			details: 'Contact Details'
 		}
 	}
