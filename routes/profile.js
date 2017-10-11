@@ -14,6 +14,13 @@ router.get('/', (req, res) => {
   }
 });
 
+// grabs About Me info for the profile page
+router.get('/about', (req, res) => {
+  // get user id from the req
+  var id = req.session.passport.user;
+  
+})
+
 router.post('/', (req, res) => {
 
   //console.log('user from request', req.session.passport.user);
@@ -23,10 +30,10 @@ router.post('/', (req, res) => {
     activity: req.body.activity,
     userId: id
   };
-  
+
   db.createProfile(profileObj, (result) => {
     //console.log('created profile');
-    
+
     res.redirect('/postings');
   });
 });

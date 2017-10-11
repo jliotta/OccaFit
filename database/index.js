@@ -221,6 +221,19 @@ var updateRequest = function(userId, callback) {
 	});
 };
 
+// get profile information for that user
+var getAboutMe = function(userid, callback) {
+  var query = "select * from profile where userId = ?";
+  connection.query(query, [userId], (err, result) => {
+    if (err) {
+      console.log('error updating request');
+    } else {
+      console.log('grabbed profile about me info', result);
+      callback(result);
+    }
+  })
+}
+
 //insert into postings (title, location, date, duration, details, meetup_spot, buddies, userId) values ('hike', 'sf', '2017-01-01 00:00:00', 1, 'hike in muir woods', 'parking', 2, 1);
 
 module.exports = {
