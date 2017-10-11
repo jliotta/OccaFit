@@ -19,17 +19,18 @@ class Profile extends Component {
 	pullAboutMeData() {
     console.log('in pullAboutMeData')
     fetch('/profile/about', {credentials: 'include'})
-			.then(response => {
-				console.log(response);
-				return response.json()
+		.then(response => {
+			console.log('response', response);
+			return response.json();
+		})
+    .then(response => {
+			console.log(response)
+      this.setState({
+				info: response[0]
 			})
-      .then(response => {
-          this.setState({
-						info: response
-					})
-					console.log('new STATE', this.state.info)
-      })
-    }
+			console.log('new STATE', this.state.info)
+    })
+  }
 
    componentDidMount(){
      this.pullAboutMeData();
@@ -47,8 +48,6 @@ class Profile extends Component {
 			this.setState({ activities: resp });
 		});
 	}
-
->>>>>>> Added Activities Feed Feature
 
 	render() {
 		return (

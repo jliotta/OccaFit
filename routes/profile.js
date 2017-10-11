@@ -19,7 +19,7 @@ router.get('/about', (req, res) => {
   var id = req.user.id;
   db.getAboutMe(id, (result) => {
     console.log('about to send response')
-    res.send(result[0])
+    res.send(result)
   })
 })
 
