@@ -134,7 +134,7 @@ var createProfile = function(profileObj, callback) {
 // send back user requests (accepts and pendings) by postings id
 var getUserPostings = function(userId, callback) {
 
-	var query = 'select * from postings where userId=?';
+	var query = 'select postings.*, users.name from postings INNER JOIN users ON postings.userId = users.id WHERE postings.userId=?';
 	// var query = 'select p.location, p.date, p.duration, p.details from postings p where userId=?'
 	connection.query(query, [userId], (err, result) => {
 		if (err) {
@@ -197,7 +197,10 @@ var createPair = function(requestObj, callback) {
 };
 
 var getUserAcceptPostings = function(userId, callback) {
-	var query = 'select * from requests r left join postings p on r.postingId = p.id where r.UserId = ? and r.status = ?';
+	var query = `SELECT result.*, users.name FROM
+              (select r.userId as hostId, r.id as postingId, p.title, p.location, p.date, p.duration, p.details, p.meetup_spot, p.buddies, p.userId from requests r left join postings p
+              on r.postingId = p.id where r.UserId = 2 and r.status = 'accept')result
+              INNER JOIN users ON result.userId = users.id`;
 	connection.query(query, [userId, 'accept'], (err, result) => {
 		if (err) {
 			console.log('error getting accepted requests');
