@@ -15,12 +15,14 @@ class AboutMe extends Component {
 						{this.props.user && <Card.Header>About {this.props.user.name}</Card.Header>}
 					</Card.Content>
 					<Card.Content>
-						{this.props.info && <Card.Meta>{this.props.info.email}</Card.Meta>}
+						<Card.Description>Contact Me:</Card.Description>
+						{this.props.info ? <Card.Meta>{this.props.info.email}</Card.Meta> : <Card.Meta>ADD YOUR CONTACT INFO</Card.Meta>}
 						{this.props.info && <Card.Meta>{this.props.info.city}, {this.props.info.state}</Card.Meta>}
-						{this.props.info && <Card.Description>{this.props.info.activity}</Card.Description>}
+						<Card.Description>Get to Know Me:</Card.Description>
+						{this.props.info ? <Card.Meta>{this.props.info.activity}</Card.Meta> : <Card.Meta>ADD YOUR INTERESTS</Card.Meta>}
 					</Card.Content>
 					<Card.Content>
-						<Button basic color='green'>Edit</Button>
+						<Button basic color='green' onClick={this.props.showSetupModal}>Edit</Button>
 					</Card.Content>
 				</Card>
 		)

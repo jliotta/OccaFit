@@ -18,7 +18,7 @@ var options = {
   host: process.env.DBSERVER || 'localhost',
   port: 3306,
   user: process.env.DBUSER || 'root',
-  password: process.env.DBPASSWORD || 'plantlife',
+  password: process.env.DBPASSWORD || '',
   database: 'fitbud',
   checkExpirationInterval: 60000,
   expiration: 3600000,
@@ -36,6 +36,7 @@ var routeProfile = require('../routes/profile');
 var routeWorkout = require('../routes/workout');
 var routeDashboard = require('../routes/dashboard');
 var routeLogout = require('../routes/logout');
+var routeSetup = require('../routes/setup');
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -62,6 +63,7 @@ app.use(function (req, res, next) {
 
 
 app.use('/register', routeRegister);
+app.use('/setup', routeSetup);
 app.use('/login', routeLogin);
 app.use('/postings', routePostings);
 
