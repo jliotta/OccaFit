@@ -37,9 +37,7 @@ class Profile extends Component {
       this.setState({
 				info: response[0]
 			})
-			console.log('new STATE', this.state.info)
-    })
-  }
+    }
 
    componentDidMount(){
      this.pullAboutMeData();
@@ -62,14 +60,8 @@ class Profile extends Component {
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
 				<ProfilePic user={this.user} details={this.state.details}/>
-<<<<<<< HEAD
-				<Activities user={this.props.user} activities={this.state.activities}/>
-				<AboutMe user={this.props.user} info={this.state.info}/>
-				<Friends />
-			</Container>
-=======
 				<Card.Group itemsPerRow={3}>
-					<Activities />
+					<Activities user={this.props.user} activities={this.state.activities}/>
 					<AboutMe user={this.props.user} info={this.state.info} showSetupModal={this.showSetupModal.bind(this)}/>
 					<Friends />
 				</Card.Group>
@@ -77,7 +69,6 @@ class Profile extends Component {
 			<Container>
 				{this.state.showModal && this.props.history.push('/setup')}
 			</Container>]
->>>>>>> toggle AboutMe Modal, capture input fields
 		)
 	}
 }
