@@ -6,7 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 const styles = {
   root: {
     marginTop: 18,
-    // padding: '0 24px 24px 24px',
+    padding: '0 24px 24px 24px',
   },
 
   customErrorLabel: {
