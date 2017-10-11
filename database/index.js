@@ -239,8 +239,10 @@ var getAboutMe = function(userid, callback) {
 
 // insert new about me info for a userId
 var insertAboutMe = function(options, callback) {
+  console.log('IN INSERT ABOUT ME')
+  var params = [options.email, options.city, options.state, options.activity, options.userId]
   var query = 'insert into profile (email, city, state, activity, userId) values (?, ?, ?, ?, ?)'
-  connection.query(query, options, (err, result) => {
+  connection.query(query, params, (err, result) => {
     if (err) {
       console.log('error inserting about me', err);
     } else {
@@ -252,8 +254,9 @@ var insertAboutMe = function(options, callback) {
 
 // update info for a prfile's about me section
 var updateAboutMe = function(options, callback) {
-  var query = 'update profile set name = ?, city = ?, state = ? , activity = ? where userId = ?';
-  connection.query(query, options, (err, result) => {
+  var params = [options.email, options.city, options.state, options.activity, options.userId]
+  var query = 'update profile set email = ?, city = ?, state = ? , activity = ? where userId = ?';
+  connection.query(query, params, (err, result) => {
     if (err) {
       console.log('error updating about me', err);
     } else {
@@ -280,5 +283,7 @@ module.exports = {
 	getUserAcceptPostings,
 	getRequestsByPostingId,
 	updateRequest,
-  getAboutMe
+  getAboutMe,
+  updateAboutMe,
+  insertAboutMe
 };

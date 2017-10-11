@@ -28,6 +28,7 @@ class Setup extends Component {
     this.updateCity = this.updateCity.bind(this);
     this.updateActivity = this.updateActivity.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
+    this.closeDisplay = this.closeDisplay.bind(this);
 	}
 
 	closeDisplay() {
@@ -81,6 +82,7 @@ class Setup extends Component {
     fetch('/setup', options)
       .then(results => {
         console.log(results)
+        this.closeDisplay();
       })
   }
 
