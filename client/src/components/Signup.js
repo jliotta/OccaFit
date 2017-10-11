@@ -35,28 +35,35 @@ class Signup extends Component {
   onValidSubmit = (formData) => {
     this.setState({submit: true});
 
+    var payload = {
+      name: formData.name,
+      username: formData.username,
+      password: formData.password
+    }
+
     var options = {
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'POST',
       credentials: 'include',
-      body: JSON.stringify(formData)
+      body: JSON.stringify(payload)
     }
 
     fetch('/register', options)
-      .then(response => {
-        if (response.ok) {
-          this.props.history.replace('/setup');
-        } else {
-          this.setState({
-            errorHeader: 'User already exists',
-            errorContent: 'Please login instead',
-            formError: true,
-            submit: false
-          })
-        }
-      })
+    .then((res) => {
+      console.log('RES:', res);
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(user => {
+      console.log('USER:', user);
+      if (user && user[0].name) {
+        this.props.authenticate(user[0]);
+        this.props.history.replace('/');                    
+      }
+    });
   };
 
   render() {

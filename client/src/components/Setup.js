@@ -25,7 +25,7 @@ class Setup extends Component {
 		this.setState({
 			displaySetup: false
 		});
-		this.props.history.replace('/login');
+		this.props.history.replace('/profile');
 	}
 
 	render() {

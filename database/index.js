@@ -17,16 +17,17 @@ connection.connect(function(err){
 	}
 });
 
-var createUser = function(userObj) {
+var createUser = function(userObj, cb) {
 	var query = 'INSERT INTO users (name, email, password) values (?, ?, ?)';
 	bcrypt.genSalt(10, function(err, salt) {
 		    bcrypt.hash(userObj.password, salt, function(err, hash) {
 		        userObj.password = hash;
 		        connection.query(query, [userObj.name, userObj.username, userObj.password], function(err, result){
 		        	if (err) {
-		        		console.log('error inserting user');
+		        		console.log('error inserting user:', err);
 		        	} else {
 		        		console.log('successfully added');
+		        		cb(err, result);
 		        	}
 		        })
 		    });
