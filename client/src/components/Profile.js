@@ -19,12 +19,7 @@ class Profile extends Component {
 
 	render() {
 		return (
-<<<<<<< HEAD
-
 			<Container style={{marginTop: '20px'}} id="profile">
-=======
-			<Container id="profile">
->>>>>>> c738e129a22e3d768466e8b322c3054880a50f30
 				<h1> THIS IS YOUR PROFILE </h1>
 				<ProfilePic user={this.user} details={this.state.details}/>
 				<Activities />
