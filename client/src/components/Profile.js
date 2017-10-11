@@ -9,12 +9,14 @@ class Profile extends Component {
 		super(props);
 	}
 
+
+
 	render() {
 		return (
 			<Container style={{marginTop: '20px'}} id="profile">
 				<h1> THIS IS YOUR PROFILE </h1>
 				<Activities />
-				<AboutMe />
+				<AboutMe user={this.props.user}/>
 				<Friends />
 			</Container>
 		)
