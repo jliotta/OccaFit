@@ -20,7 +20,7 @@ class AboutMe extends Component {
 						{this.props.info && <Card.Description>{this.props.info.activity}</Card.Description>}
 					</Card.Content>
 					<Card.Content>
-						<Button basic color='green'>Edit</Button>
+						<Button basic color='green' onClick={this.props.showSetupModal}>Edit</Button>
 					</Card.Content>
 				</Card>
 		)
