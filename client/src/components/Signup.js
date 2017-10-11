@@ -24,8 +24,6 @@ class Signup extends Component {
       submit: false,
       formData: null
     }
-
-    console.log(this.props);
   }
 
   componentDidMount() {
