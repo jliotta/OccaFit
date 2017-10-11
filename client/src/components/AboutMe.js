@@ -11,6 +11,9 @@ class AboutMe extends Component {
 		return (
 			<div id="about-me">
 				<h1>{this.props.user && this.props.user.name}</h1>
+				<h3>{this.props.info && this.props.info.email}</h3>
+				<h3>{this.props.info && this.props.info. city}, {this.props.info && this.props.info.state}</h3>
+				<h3>{this.props.info && this.props.info.activity}</h3>
 			</div>
 		)
 	}

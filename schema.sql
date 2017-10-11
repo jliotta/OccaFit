@@ -40,7 +40,7 @@ CREATE TABLE profile (
   email varchar(255),
   city varchar(255),
   state varchar(40),
-  activity varchar(400) NOT NULL,
+  activity varchar(400),
   userId INT,
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES users(id)
