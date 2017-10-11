@@ -15,7 +15,7 @@ CREATE TABLE users (
   name varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
-  
+
   PRIMARY KEY (id)
 );
 
@@ -30,33 +30,32 @@ CREATE TABLE postings (
   meetup_spot varchar(255) NOT NULL,
   buddies INT NOT NULL,
   userId INT,
-  
+
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 CREATE TABLE profile (
   id INT NOT NULL AUTO_INCREMENT,
-  gender varchar(20), 
-  activity varchar(255) NOT NULL,
-  userId INT,  
+  email varchar(255),
+  city varchar(255),
+  state varchar(40),
+  activity varchar(400),
+  userId INT,
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 CREATE TABLE requests (
   id INT NOT NULL AUTO_INCREMENT,
-  postingId INT, 
+  postingId INT,
   userId INT,
   status ENUM('pending', 'accept', 'reject'),
-  
+
   PRIMARY KEY (id),
   FOREIGN KEY (postingId) REFERENCES postings(id),
   FOREIGN KEY (userId) REFERENCES users(id)
-  
+
 );
 
 select postings.*, users.name from postings inner join users on postings.userId=users.id where postings.id=3;
-
-
-

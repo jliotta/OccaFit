@@ -18,7 +18,7 @@ var options = {
   host: process.env.DBSERVER || 'localhost',
   port: 3306,
   user: process.env.DBUSER || 'root',
-  password: process.env.DBPASSWORD || 'plantlife',
+  password: process.env.DBPASSWORD || '',
   database: 'fitbud',
   checkExpirationInterval: 60000,
   expiration: 3600000,
@@ -69,6 +69,7 @@ app.use('/postings', routePostings);
 app.use(checkAuth);
 
 // Below are the protected routes
+console.log('about to go to PROFILE')
 app.use('/profile', routeProfile);
 app.use('/workout', routeWorkout);
 app.use('/dashboard', routeDashboard);
