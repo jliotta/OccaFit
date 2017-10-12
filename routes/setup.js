@@ -4,7 +4,8 @@ var db = require('../database/index.js');
 
 router.post('/', (req, res) => {
   var options = req.body;
-  options.userId = req.session.passport.user;
+  console.log('REQUEST USER', req.body)
+  //options.userId = req.user.id;
   db.getAboutMe(options.userId, results => {
     if (results.length === 0) {
       console.log("no user info yet")

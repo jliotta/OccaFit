@@ -14,8 +14,10 @@ class Profile extends Component {
 			info: null,
 			details: 'Contact Details',
 			activities: null,
-			showModal: false
+			showModal: false,
+			shouldIUpdate: true
 		}
+		this.pullAboutMeData = this.pullAboutMeData.bind(this)
 	}
 
 	showSetupModal() {
@@ -26,8 +28,8 @@ class Profile extends Component {
 	}
 
 	pullAboutMeData() {
-    console.log('in pullAboutMeData')
-    fetch('/profile/about', {credentials: 'include'})
+    console.log('USER IN PULL DATA', this.props.user)
+    fetch('/profile/about', {credentials: 'include', headers: {user: this.props.user.id}})
 		.then(response => {
 			console.log('response', response);
 			return response.json();
@@ -41,17 +43,43 @@ class Profile extends Component {
     })
   }
 
-   componentDidMount(){
-     this.pullAboutMeData();
-		 this.getActivities();
-  }
+
+
+	componentDidUpdate(){
+		//this.checkAuth();
+		console.log('PROPS from comp will receive props', this.props)
+		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
+		if (this.state.shouldIUpdate) {
+			this.pullAboutMeData();
+			this.getActivities();
+			this.setState({shouldIUpdate: false});
+		}
+	}
+
+	componentWillUnmount() {
+		console.log('COMPONENT WILL UNMOUNT:', this.props);
+		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
+		this.setState({shouldIUpdate: true}, () => {
+			console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
+		});
+		// this.props.router.setRouteLeaveHook(this.props.route, () => {
+		// 	this.shouldIUpdate = true;
+		// })
+	}
+
+	componentDidMount() {
+		if (this.props.user) {
+			this.pullAboutMeData();
+			this.getActivities();
+		}
+	}
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
 
   user = '/' + this.images[Math.floor(Math.random() * this.images.length)];
 
 	getActivities() {
-		fetch('/profile/activities', { credentials: "include" })
+		fetch('/profile/activities', { credentials: "include", headers: {user: this.props.user.id} })
 		.then(resp => resp.json())
 		.then(resp => {
 			this.setState({ activities: resp });

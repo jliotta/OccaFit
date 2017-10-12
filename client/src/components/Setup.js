@@ -67,7 +67,8 @@ class Setup extends Component {
       email: this.state.email,
       city: this.state.city,
       state: this.state.state,
-      activity: this.state.activity
+      activity: this.state.activity,
+      userId: this.props.user.id
     }
     console.log('here is my FORM DATA', inputs)
     //fetch to server as a post request
