@@ -5,7 +5,6 @@ import { Icon, Item, Divider } from 'semantic-ui-react'
 const FriendEntry = (props) => (
   
     <Item>
-    {console.log("hellllllo",props)}
       <Item.Image onClick={() => {props.handleUserClick(props.user)}} 
       			  size='tiny' 
       			  src='/daniel.jpg' 

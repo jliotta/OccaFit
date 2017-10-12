@@ -49,7 +49,6 @@ var checkUser = function(username, callback) {
 }
 
 var comparePassword = function(passwordEntered, hash, callback) {
-	console.log('inside compare password');
 	bcrypt.compare(passwordEntered, hash, function(err, isMatch){
 		if (err) throw err;
 		callback(null, isMatch)
@@ -58,8 +57,6 @@ var comparePassword = function(passwordEntered, hash, callback) {
 };
 
 var findById = function(id, callback) {
-	console.log('database finding by id');
-
 	var query = 'SELECT * from users WHERE id = ?';
 	connection.query(query, [id], function(err, dbResultArr){
 		if (err) {

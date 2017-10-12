@@ -4,6 +4,7 @@ import { Container, Image, List } from 'semantic-ui-react';
 class ProfilePic extends Component {
   constructor(props) {
     super(props);
+    console.log('PROF PIC:', this);
   }
 
   render() {
@@ -15,7 +16,7 @@ class ProfilePic extends Component {
         <Container style={{"textAlign": "center"}}>
           <List style={{margin: '10px'}}>
             <List.Item>
-              <List.Header>{this.props.details}</List.Header>
+              <List.Header>{this.props.name}</List.Header>
             </List.Item>
           </List>
         </Container>
