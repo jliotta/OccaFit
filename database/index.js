@@ -65,7 +65,7 @@ var findById = function(id, callback) {
 		if (err) {
 			console.log('error when finding id');
 		} else {
-			console.log('result of finding a id', dbResultArr[0]);
+			//console.log('result of finding a id', dbResultArr[0]);
 			callback(null, dbResultArr[0]);
 		}
 	})
@@ -237,6 +237,7 @@ var getAboutMe = function(userid, callback) {
   })
 }
 
+
 // insert new about me info for a userId
 var insertAboutMe = function(options, callback) {
   console.log('IN INSERT ABOUT ME')
@@ -251,6 +252,47 @@ var insertAboutMe = function(options, callback) {
     }
   })
 }
+
+var friendList = function (userId, callback) {
+  var query1 = `(Select userOneId from relationship where userTwoId = ${userId} ) Union (Select userTwoId from relationship where userOneId = ${userId})`;
+  connection.query(query1, [userId, userId], function(err, result) {
+    if(err) {
+      console.log('error on query 1 of friendlist');
+    } else {
+      console.log('yesssss', result);
+      callback(result);
+    }
+  })
+
+};
+
+var friendRequest = function (user1Id, user2Id, callback) {
+  var query = "INSERT INTO relationship (userOneId, userTwoId, statusId, userOneId) VALUES (?, ?, 0, ?)";
+  connection.query(query, [user1Id, user2Id, userOne], function(err, result) {
+    if(err) {
+      console.log('error making a friendrequest');
+    } else {
+      console.log('request pending for friend request', result)
+      calllback(result)
+    }
+  })
+
+};
+
+var acceptFriendRequest = function (user1Id, user2Id,callback) {
+  var query = "UPDATE relationship SET statusId = 1, actionId = ? WHERE userOneId = ? AND userTwoId = ?";
+  connection.query(query, [user2Id, user1Id, user2Id], function(err, result) {
+    if(err) {
+      console.log('error accepting friend request');
+    } else {
+      console.log('accepted friend request', result)
+      calllback(result)
+    }
+  })
+
+};
+
+
 
 // update info for a prfile's about me section
 var updateAboutMe = function(options, callback) {
@@ -284,6 +326,11 @@ module.exports = {
 	getRequestsByPostingId,
 	updateRequest,
   getAboutMe,
+<<<<<<< HEAD
   updateAboutMe,
   insertAboutMe
+=======
+  friendList
+
+>>>>>>> finish friendslist
 };

@@ -1,14 +1,20 @@
 import React from 'react'
-import { Icon, Item } from 'semantic-ui-react'
+import { Icon, Item, Divider } from 'semantic-ui-react'
 
 
 const FriendEntry = (props) => (
   
     <Item>
-      <Item.Image size='tiny' src='/assets/images/avatar/large/jenny.jpg' />
+    {console.log("hellllllo",props)}
+      <Item.Image onClick={() => {props.handleUserClick(props.user)}} 
+      			  size='tiny' 
+      			  src='/daniel.jpg' 
+      			  id="friendImage"
+      			  shape='circular'/>
+
 
       <Item.Content verticalAlign='middle'>
-        <Item.Header>
+        <Item.Header id="friendName">
           {props.user.name}
         </Item.Header>
       </Item.Content>
@@ -17,4 +23,3 @@ const FriendEntry = (props) => (
 )
 
 export default FriendEntry
-

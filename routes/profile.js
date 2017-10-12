@@ -19,7 +19,7 @@ router.get('/about', (req, res) => {
   var id = req.headers.user;
   console.log('ID', id)
   db.getAboutMe(id, (result) => {
-    console.log('about to send response')
+    console.log('about to send response', result)
     res.send(result)
   })
 })
@@ -60,6 +60,29 @@ router.post('/', (req, res) => {
 
     res.redirect('/postings');
   });
+});
+
+router.get('/friends', (req, res) => {
+  //Send back user data of the current users friends 
+  var userId = req.session.passport.user;
+  db.friendList(userId, (result)=> {
+    Promise.all(result.map(function(el) {
+        return new Promise ((resolve, reject) => {
+          var id = el.userOneId;
+          db.findById(id, (err, result) => {
+            if(err) {
+              reject(err);
+            }else {
+              resolve(result);
+            }
+          });
+        }) 
+    })).then(result => {
+      
+      res.send(result);
+    })
+    
+  })
 });
 
 module.exports = router;
