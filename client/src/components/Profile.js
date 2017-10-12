@@ -11,7 +11,7 @@ class Profile extends Component {
 		super(props);
 		this.state = {
 			info: null,
-
+			user: null,
 			details: 'Contact Details',
 			activities: null,
 			showModal: false,
@@ -32,8 +32,8 @@ class Profile extends Component {
 
 	pullAboutMeData() {
 
-    console.log('USER IN PULL DATA', this.props.user)
-    fetch('/profile/about', {credentials: 'include', headers: {user: this.props.user.id}})
+    console.log('USER IN PULL DATA', this.props.match.params.id)
+    fetch('/profile/about', {credentials: 'include', headers: {user: this.props.match.params.id}})
 		.then(response => {
 			console.log('response', response);
 			return response.json();
@@ -65,13 +65,27 @@ class Profile extends Component {
 		this.setState({shouldIUpdate: true}, () => {
 			console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
 		});
+
 	}
 
 	componentDidMount() {
-		if (this.props.user) {
+		// if (this.props.user) {
 			this.pullAboutMeData();
 			this.getActivities();
-		}
+		// }
+		console.log('PARAMETER :id', this.props.match.params.id);
+	}
+
+	componentWillMount() {
+		fetch('/profile/' + this.props.match.params.id, { credentials: "include"})
+		.then(resp => resp.json())
+		.then(data => {
+			console.log('USER DATA:', data);
+			this.setState({
+				user: data
+			});
+			console.log('THISTHISTHIS:', this);
+		});
 	}
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
@@ -80,7 +94,7 @@ class Profile extends Component {
 
 
 	getActivities() {
-		fetch('/profile/activities', { credentials: "include", headers: {user: this.props.user.id} })
+		fetch('/profile/activities', { credentials: "include", headers: {user: this.props.match.params.id} })
 		.then(resp => resp.json())
 		.then(resp => {
 			this.setState({ activities: resp });
@@ -95,8 +109,8 @@ class Profile extends Component {
 				<ProfilePic user={this.user} details={this.state.details}/>
 
 				<Card.Group itemsPerRow={3}>
-					<Activities user={this.props.user} activities={this.state.activities}/>
-					<AboutMe user={this.props.user} info={this.state.info} showSetupModal={this.showSetupModal.bind(this)}/>
+					<Activities user={this.state.user} activities={this.state.activities}/>
+					<AboutMe user={this.state.user} info={this.state.info} showSetupModal={this.showSetupModal.bind(this)}/>
 					<Friends />
 				</Card.Group>
 			</Container>,

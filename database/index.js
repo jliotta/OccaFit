@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt');
 var connection = mysql.createConnection({
   host: process.env.DBSERVER || 'localhost',
   user: process.env.DBUSER || 'root',
-  password: process.env.DBPASSWORD || '',
+  password: process.env.DBPASSWORD || 'plantlife',
   database : 'fitbud'
 });
 
@@ -63,7 +63,8 @@ var findById = function(id, callback) {
 	var query = 'SELECT * from users WHERE id = ?';
 	connection.query(query, [id], function(err, dbResultArr){
 		if (err) {
-			console.log('error when finding id');
+			console.error('error when finding id');
+      callback(err, null);
 		} else {
 			//console.log('result of finding a id', dbResultArr[0]);
 			callback(null, dbResultArr[0]);
@@ -199,7 +200,7 @@ var createPair = function(requestObj, callback) {
 var getUserAcceptPostings = function(userId, callback) {
 	var query = `SELECT result.*, users.name FROM
               (select r.userId as hostId, r.id as postingId, p.title, p.location, p.date, p.duration, p.details, p.meetup_spot, p.buddies, p.userId from requests r left join postings p
-              on r.postingId = p.id where r.UserId = 2 and r.status = 'accept')result
+              on r.postingId = p.id where r.UserId = ? and r.status = ?)result
               INNER JOIN users ON result.userId = users.id`;
 	connection.query(query, [userId, 'accept'], (err, result) => {
 		if (err) {

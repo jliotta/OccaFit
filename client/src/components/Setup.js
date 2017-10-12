@@ -35,7 +35,8 @@ class Setup extends Component {
 		this.setState({
 			displaySetup: false
 		});
-		this.props.history.replace('/profile');
+    console.log(this.props.history);
+		this.props.history.goBack();
 	}
 
   updateEmail(e){

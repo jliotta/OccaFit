@@ -26,12 +26,17 @@ class MainNav extends Component {
   };
 
   searchUser(event, data){
+    console.log('SEARCH USER DATA:', data);
     var userId = data.value;
+
+    this.props.changeProfile();
+    // this.props.history.push('/profile/' + userId);
+
     //var path = '/profile/' + data.value;
-    fetch('/search/user', {credentials: 'include', headers: {userId: this.props.user.id}})
-      .then(response => {
-        console.log(response)
-      })
+    // fetch('/search/user', {credentials: 'include', headers: {userId: userId}})
+    //   .then(response => {
+    //     console.log('REDIRECT', response.)
+    //   })
   };
 
   signOutRedirect = () => {}
@@ -69,7 +74,7 @@ class MainNav extends Component {
             <Dropdown text={this.props.user.name} className='link item' pointing>
               <Dropdown.Menu>
                 <Dropdown.Item as={Link} to='/dashboard'>Dashboard</Dropdown.Item>
-                <Dropdown.Item as={Link} to='/profile'>Profile</Dropdown.Item>
+                <Dropdown.Item as={Link} to={'/profile/' + this.props.user.id}>Profile</Dropdown.Item>
                 <Dropdown.Item>Referral</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={this.props.signoff} as={Link} to='/'>Log Out</Dropdown.Item>

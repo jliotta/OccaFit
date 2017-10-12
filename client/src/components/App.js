@@ -62,12 +62,18 @@ class App extends Component {
     }).then(response => console.log(response.status));
   }
 
+  changeProfile = () => {
+
+    console.log('THIS PROPS HISTORY: ', this);
+  }
+
+
   render() {
     return (
       <Router>
         <div>
           <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated}
-                   signoff={this.handleSignOff} user={this.state.user} />
+                   signoff={this.handleSignOff} user={this.state.user} changeProfile={this.changeProfile.bind(this)}/>
           <Switch>
             <Route exact path='/' render={props => (
               <Home user={this.state.user} visible={this.state.visible} {...props} />
@@ -93,9 +99,15 @@ class App extends Component {
               <Dashboard listings={data} {...props} />
             )} />
 
-            <Route exact path='/profile' render={props => (
+            {/* <Route path='/profile' render={props => (
+              <Profile user={this.state.user} router={Router} route={Route} {...props}/>
+            )} /> */}
+
+            <Route path="/profile/:id" render={props => (
               <Profile user={this.state.user} router={Router} route={Route} {...props}/>
             )} />
+
+            {/* <Route path="/profile/:id" component={Profile} /> */}
 
             <Route exact path='/create' render={props => (
               <CreateListing {...props} />
