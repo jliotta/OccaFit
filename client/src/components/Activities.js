@@ -19,8 +19,8 @@ class Activities extends Component {
                 <Card.Content id='activities'>
                     {
                         this.props.activities && this.props.activities.attended &&
-                        this.props.activities.hosted && this.props.activities.attended.length > 0 &&
-                        this.props.activities.hosted.length > 0 ?
+                        this.props.activities.hosted && (this.props.activities.attended.length > 0 ||
+                        this.props.activities.hosted.length > 0) ?
 
                         <Segment>
                             {
@@ -78,5 +78,3 @@ class Activities extends Component {
 }
 
 export default Activities;
-
-
