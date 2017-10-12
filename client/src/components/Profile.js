@@ -15,7 +15,7 @@ class Profile extends Component {
 			details: 'Contact Details',
 			activities: null,
 			showModal: false,
-			shouldIUpdate: true
+			shouldIUpdate: true,
 
 			details: 'Contact Details'
 
@@ -38,24 +38,14 @@ class Profile extends Component {
 			console.log('response', response);
 			return response.json();
 		})
-    .then(response => {
-			console.log(response)
-      this.setState({
-				info: response[0]
+	    .then(response => {
+				console.log(response)
+	      	this.setState({
+					info: response[0]
 
-    console.log('in pullAboutMeData')
-    fetch('/profile/about', {credentials: 'include'})
-			.then(response => {
-				console.log(response);
-				return response.json()
-
-			})
-      .then(response => {
-          this.setState({
-						info: response
-					})
-					console.log('new STATE', this.state.info)
-      })
+	    	})
+	    })
+      
     }
 
 

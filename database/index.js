@@ -326,11 +326,8 @@ module.exports = {
 	getRequestsByPostingId,
 	updateRequest,
   getAboutMe,
-<<<<<<< HEAD
   updateAboutMe,
-  insertAboutMe
-=======
+  insertAboutMe,
   friendList
 
->>>>>>> finish friendslist
 };
