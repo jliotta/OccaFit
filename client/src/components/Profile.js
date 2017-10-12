@@ -31,61 +31,43 @@ class Profile extends Component {
 	}
 
 	pullAboutMeData() {
+		var id = this.props.match.params.id;
+		this.props.getAboutMe(id);
+  }
 
-    console.log('USER IN PULL DATA', this.props.match.params.id)
-    fetch('/profile/about', {credentials: 'include', headers: {user: this.props.match.params.id}})
-		.then(response => {
-			console.log('response', response);
-			return response.json();
-		})
-	    .then(response => {
-				console.log(response)
-	      	this.setState({
-					info: response[0]
+	// componentDidUpdate(){
+	// 	//this.checkAuth();
+	// 	console.log('PROPS from comp will receive props', this.props)
+	// 	console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
+	// 	if (this.state.shouldIUpdate) {
+	// 		this.pullAboutMeData();
+	// 		this.getActivities();
+	// 		this.setState({shouldIUpdate: false});
+	// 	}
+	// }
+	//
+	// componentWillUnmount() {
+	// 	console.log('COMPONENT WILL UNMOUNT:', this.props);
+	// 	console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
+	// 	this.setState({shouldIUpdate: true}, () => {
+	// 		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
+	// 	});
+	//
+	// }
 
-	    	})
-	    })
-
-    }
-
-	componentDidUpdate(){
-		//this.checkAuth();
-		console.log('PROPS from comp will receive props', this.props)
-		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
-		if (this.state.shouldIUpdate) {
-			this.pullAboutMeData();
-			this.getActivities();
-			this.setState({shouldIUpdate: false});
-		}
-	}
-
-	componentWillUnmount() {
-		console.log('COMPONENT WILL UNMOUNT:', this.props);
-		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
-		this.setState({shouldIUpdate: true}, () => {
-			console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
-		});
-
-	}
-
-	componentDidMount() {
-		// if (this.props.user) {
-			this.pullAboutMeData();
-			this.getActivities();
-		// }
-		console.log('PARAMETER :id', this.props.match.params.id);
-	}
+	// componentDidMount() {
+	// 	// if (this.props.user) {
+	// 		this.pullAboutMeData();
+	// 		this.getActivities();
+	// 	// }
+	// 	console.log('PARAMETER :id', this.props.match.params.id);
+	// }
 
 	componentWillMount() {
-		fetch('/profile/' + this.props.match.params.id, { credentials: "include"})
-		.then(resp => resp.json())
-		.then(data => {
-			console.log('USER DATA:', data);
-			this.setState({
-				user: data
-			});
-			console.log('THISTHISTHIS:', this);
-		});
+		var id = this.props.match.params.id;
+			this.props.getUser(id);
+			this.pullAboutMeData();
+			this.getActivities();
 	}
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
@@ -94,23 +76,21 @@ class Profile extends Component {
 
 
 	getActivities() {
-		fetch('/profile/activities', { credentials: "include", headers: {user: this.props.match.params.id} })
-		.then(resp => resp.json())
-		.then(resp => {
-			this.setState({ activities: resp });
-		});
+		var id = this.props.match.params.id;
+		this.props.getUserActivities(id);
 	}
 
 
 
 	render() {
+		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
 				<ProfilePic user={this.user} details={this.state.details}/>
 
 				<Card.Group itemsPerRow={3}>
-					<Activities user={this.state.user} activities={this.state.activities}/>
-					<AboutMe user={this.state.user} info={this.state.info} showSetupModal={this.showSetupModal.bind(this)}/>
+					<Activities user={this.props.currentProfile} activities={this.props.activities}/>
+					<AboutMe user={this.props.currentProfile} info={this.props.info} showSetupModal={this.showSetupModal.bind(this)}/>
 					<Friends />
 				</Card.Group>
 			</Container>,

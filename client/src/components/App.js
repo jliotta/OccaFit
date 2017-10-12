@@ -21,7 +21,10 @@ class App extends Component {
     this.state = {
       authenticated: false,
       user: null,
-      visible: null
+      visible: null,
+      activites: null,
+      info: {},
+      currentProfile: null
     }
 
     this.cookies = new Cookies();
@@ -64,16 +67,51 @@ class App extends Component {
 
   changeProfile = () => {
 
-    console.log('THIS PROPS HISTORY: ', this);
+    console.log('THIS PROPS HISTORY: ', this.props);
+  }
+
+  getAboutMe = (id) => {
+    fetch('/profile/about', {credentials: 'include', headers: {user: id}})
+		.then(response => {
+			console.log('response', response);
+			return response.json();
+		})
+	    .then(response => {
+				console.log(response)
+	      	this.setState({
+					info: response[0]
+
+	    	})
+	    })
+  }
+
+  getUserActivities = (id) => {
+    fetch('/profile/activities', { credentials: "include", headers: {user: id} })
+		.then(resp => resp.json())
+		.then(resp => {
+			this.setState({ activities: resp });
+		});
+  }
+
+  getUser(id) {
+    fetch('/profile/' + id, { credentials: "include"})
+		.then(resp => resp.json())
+		.then(data => {
+			console.log('USER DATA:', data);
+			this.setState({
+				currentProfile: data
+			});
+		});
   }
 
 
   render() {
+    console.log("IN APP USER", this.state.user)
     return (
       <Router>
         <div>
           <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated}
-                   signoff={this.handleSignOff} user={this.state.user} changeProfile={this.changeProfile.bind(this)}/>
+                   signoff={this.handleSignOff} user={this.state.user} getUser={this.getUser.bind(this)} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} changeProfile={this.changeProfile.bind(this)}/>
           <Switch>
             <Route exact path='/' render={props => (
               <Home user={this.state.user} visible={this.state.visible} {...props} />
@@ -104,7 +142,7 @@ class App extends Component {
             )} /> */}
 
             <Route path="/profile/:id" render={props => (
-              <Profile user={this.state.user} router={Router} route={Route} {...props}/>
+              <Profile user={this.state.user} currentProfile={this.state.currentProfile} getUser={this.getUser.bind(this)} router={Router} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} activities={this.state.activities} info={this.state.info} route={Route} {...props}/>
             )} />
 
             {/* <Route path="/profile/:id" component={Profile} /> */}
