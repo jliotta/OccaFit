@@ -37,6 +37,7 @@ var routeWorkout = require('../routes/workout');
 var routeDashboard = require('../routes/dashboard');
 var routeLogout = require('../routes/logout');
 var routeSetup = require('../routes/setup');
+var routeSearch = require('../routes/search');
 
 
 
@@ -67,6 +68,7 @@ app.use(function (req, res, next) {
 app.use('/register', routeRegister);
 app.use('/setup', routeSetup);
 app.use('/login', routeLogin);
+app.use('/search', routeSearch);
 app.use('/postings', routePostings);
 
 

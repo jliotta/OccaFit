@@ -48,9 +48,6 @@ class Profile extends Component {
 
     }
 
-
-
-
 	componentDidUpdate(){
 		//this.checkAuth();
 		console.log('PROPS from comp will receive props', this.props)
@@ -76,7 +73,6 @@ class Profile extends Component {
 			this.getActivities();
 		}
 	}
-
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
 

@@ -307,6 +307,19 @@ var updateAboutMe = function(options, callback) {
     }
   })
 }
+
+// get all users
+var getUsers = function(callback) {
+  var query = 'select id, name from users';
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.log('error getting all users', err)
+    } else {
+      console.log('got all users from db', results)
+      callback(results);
+    }
+  })
+}
 //insert into postings (title, location, date, duration, details, meetup_spot, buddies, userId) values ('hike', 'sf', '2017-01-01 00:00:00', 1, 'hike in muir woods', 'parking', 2, 1);
 
 module.exports = {
@@ -328,6 +341,6 @@ module.exports = {
   getAboutMe,
   updateAboutMe,
   insertAboutMe,
-  friendList
-
+  friendList,
+  getUsers
 };
