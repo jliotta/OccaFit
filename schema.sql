@@ -58,4 +58,31 @@ CREATE TABLE requests (
 
 );
 
+CREATE TABLE IF NOT EXISTS `StatusCode` (
+    id INT(1),
+    Meaning VARCHAR(500),
+
+    PRIMARY KEY (id)
+);
+
+INSERT INTO StatusCode (id, Meaning)
+VALUES
+    (0, 'Pending'),
+    (1, 'Accepted'),
+    (2, 'Decline'),
+    (3, 'Blocked');
+
+
+CREATE TABLE relationship (
+  userOneId INT NOT NULL,
+  userTwoId INT NOT NULL, 
+  statusId INT NOT NULL,
+  actionId INT NOT NULL,
+  
+  FOREIGN KEY (userOneId) REFERENCES users(id),
+  FOREIGN KEY (userTwoId) REFERENCES users(id),
+  FOREIGN KEY (actionId) REFERENCES users(id), 
+  FOREIGN KEY (statusId) REFERENCES StatusCode(id)
+);
+
 select postings.*, users.name from postings inner join users on postings.userId=users.id where postings.id=3;

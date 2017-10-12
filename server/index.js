@@ -38,6 +38,8 @@ var routeDashboard = require('../routes/dashboard');
 var routeLogout = require('../routes/logout');
 var routeSetup = require('../routes/setup');
 
+
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('build'));

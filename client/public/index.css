@@ -16,5 +16,28 @@ body {
 	float: left;
 	width: 30%;
 	margin: 15px;
-	border: 5px solid black;
+	
 }
+
+#friends {
+	overflow-y: scroll;
+}
+
+#friendImage {
+	border-radius: 25px;
+}
+
+#friendImage:hover {
+	border: 3px solid slategray;
+	border-radius: 50px;
+
+}
+
+#friendName {
+	background-color: 
+}
+
+
+
+
+
