@@ -16,7 +16,7 @@ class Profile extends Component {
 			showModal: false,
 			shouldIUpdate: true,
 		}
-		this.pullAboutMeData = this.pullAboutMeData.bind(this)
+		this.pullAboutMeData = this.pullAboutMeData.bind(this);
 	}
 
 	showSetupModal() {
@@ -26,6 +26,7 @@ class Profile extends Component {
 	}
 
 	pullAboutMeData() {
+
 		var id = this.props.match.params.id;
 		this.props.getAboutMe(id);
   }
@@ -58,11 +59,6 @@ class Profile extends Component {
 	// 	console.log('PARAMETER :id', this.props.match.params.id);
 	// }
 
-  images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
-
-  user = '/' + this.images[Math.floor(Math.random() * this.images.length)];
-
-
 	getActivities() {
 		var id = this.props.match.params.id;
 		this.props.getUserActivities(id);
@@ -79,7 +75,7 @@ class Profile extends Component {
 		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
-				<ProfilePic user={this.user} name={this.state.user && this.state.user.name}/>
+				<ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
 
 				<Card.Group itemsPerRow={3}>
 					<Activities user={this.props.currentProfile} activities={this.props.activities}/>
