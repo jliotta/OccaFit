@@ -83,6 +83,11 @@ router.get('/friends', (req, res) => {
   })
 });
 
+router.post('/friends', (req, res) => {
+  console.log('INSIDE FRIENDS POST:', req);
+  res.send({});
+});
+
 router.get('/:id', (req, res) => {
   // res.send('RENDER profile page');
   // console.log('user profile', req.user);
