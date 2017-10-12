@@ -27,6 +27,10 @@ var options = {
 var sessionStore = new MYSQLStore(options);
 
 var app = express();
+
+var http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 app.use(morgan('dev'));
 
 var routeRegister = require('../routes/register');
@@ -98,6 +102,16 @@ app.listen(process.env.PORT || 3001, function(err){
 	}
 	console.log(`listening on ${process.env.PORT || 3001}`);
 })
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+   console.log('message: ' + msg);
+  });
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
 
 
 // express session
