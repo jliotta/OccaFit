@@ -48,9 +48,6 @@ class Profile extends Component {
 
     }
 
-
-
-
 	componentDidUpdate(){
 		//this.checkAuth();
 		console.log('PROPS from comp will receive props', this.props)
