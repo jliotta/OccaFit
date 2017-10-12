@@ -45,7 +45,7 @@ class Profile extends Component {
 
 	    	})
 	    })
-      
+
     }
 
 
@@ -68,9 +68,6 @@ class Profile extends Component {
 		this.setState({shouldIUpdate: true}, () => {
 			console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
 		});
-		// this.props.router.setRouteLeaveHook(this.props.route, () => {
-		// 	this.shouldIUpdate = true;
-		// })
 	}
 
 	componentDidMount() {
@@ -79,10 +76,6 @@ class Profile extends Component {
 			this.getActivities();
 		}
 	}
-
-   componentDidMount(){
-     this.pullAboutMeData();
-  }
 
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
