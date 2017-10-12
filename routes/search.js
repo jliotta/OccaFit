@@ -18,11 +18,11 @@ router.get('/', (req, res) => {
   })
 })
 
-router.get('/user', (res, res) => {
-  var userId = req.headers.userId;
-  console.log('IN ROUTER WITH USER ID', req.headers.userId)
+router.get('/user', (req, res) => {
+  var userId = req.headers.userid;
+  console.log('IN ROUTER WITH USER ID', userId)
   var path = '../profile/' + userId;
-  res.redirect(path)
+  res.redirect(301, path)
 })
 
 module.exports = router;

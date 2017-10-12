@@ -26,12 +26,17 @@ class MainNav extends Component {
   };
 
   searchUser(event, data){
+    console.log('SEARCH USER DATA:', data);
     var userId = data.value;
+
+    this.props.changeProfile();
+    // this.props.history.push('/profile/' + userId);
+
     //var path = '/profile/' + data.value;
-    fetch('/search/user', {credentials: 'include', headers: {userId: this.props.user.id}})
-      .then(response => {
-        console.log(response)
-      })
+    // fetch('/search/user', {credentials: 'include', headers: {userId: userId}})
+    //   .then(response => {
+    //     console.log('REDIRECT', response.)
+    //   })
   };
 
   signOutRedirect = () => {}

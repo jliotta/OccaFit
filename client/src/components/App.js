@@ -62,12 +62,18 @@ class App extends Component {
     }).then(response => console.log(response.status));
   }
 
+  changeProfile = () => {
+
+    console.log('THIS PROPS HISTORY: ', this);
+  }
+
+
   render() {
     return (
       <Router>
         <div>
           <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated}
-                   signoff={this.handleSignOff} user={this.state.user} />
+                   signoff={this.handleSignOff} user={this.state.user} changeProfile={this.changeProfile.bind(this)}/>
           <Switch>
             <Route exact path='/' render={props => (
               <Home user={this.state.user} visible={this.state.visible} {...props} />
