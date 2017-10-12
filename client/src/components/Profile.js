@@ -12,13 +12,9 @@ class Profile extends Component {
 		this.state = {
 			info: null,
 			user: null,
-			details: 'Contact Details',
 			activities: null,
 			showModal: false,
 			shouldIUpdate: true,
-
-			details: 'Contact Details'
-
 		}
 		this.pullAboutMeData = this.pullAboutMeData.bind(this)
 	}
@@ -27,19 +23,14 @@ class Profile extends Component {
 		this.setState({
 			showModal: true
 		})
-		console.log('new state', this.state.showModal)
 	}
 
 	pullAboutMeData() {
-
-    console.log('USER IN PULL DATA', this.props.match.params.id)
     fetch('/profile/about', {credentials: 'include', headers: {user: this.props.match.params.id}})
 		.then(response => {
-			console.log('response', response);
 			return response.json();
 		})
 	    .then(response => {
-				console.log(response)
 	      	this.setState({
 					info: response[0]
 
@@ -49,9 +40,6 @@ class Profile extends Component {
     }
 
 	componentDidUpdate(){
-		//this.checkAuth();
-		console.log('PROPS from comp will receive props', this.props)
-		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
 		if (this.state.shouldIUpdate) {
 			this.pullAboutMeData();
 			this.getActivities();
@@ -60,8 +48,6 @@ class Profile extends Component {
 	}
 
 	componentWillUnmount() {
-		console.log('COMPONENT WILL UNMOUNT:', this.props);
-		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
 		this.setState({shouldIUpdate: true}, () => {
 			console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
 		});
@@ -69,22 +55,17 @@ class Profile extends Component {
 	}
 
 	componentDidMount() {
-		// if (this.props.user) {
 			this.pullAboutMeData();
 			this.getActivities();
-		// }
-		console.log('PARAMETER :id', this.props.match.params.id);
 	}
 
 	componentWillMount() {
 		fetch('/profile/' + this.props.match.params.id, { credentials: "include"})
 		.then(resp => resp.json())
 		.then(data => {
-			console.log('USER DATA:', data);
 			this.setState({
 				user: data
 			});
-			console.log('THISTHISTHIS:', this);
 		});
 	}
 
@@ -106,7 +87,7 @@ class Profile extends Component {
 	render() {
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
-				<ProfilePic user={this.user} details={this.state.details}/>
+				<ProfilePic user={this.user} name={this.state.user && this.state.user.name}/>
 
 				<Card.Group itemsPerRow={3}>
 					<Activities user={this.state.user} activities={this.state.activities}/>
