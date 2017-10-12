@@ -77,7 +77,6 @@ class Profile extends Component {
 		}
 	}
 
-
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
 
   user = '/' + this.images[Math.floor(Math.random() * this.images.length)];
