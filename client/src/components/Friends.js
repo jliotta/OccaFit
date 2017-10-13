@@ -7,24 +7,24 @@ class Friends extends Component {
 		super(props);
 		this.state = {
 			friends: [{name:"david", id:1}, {name:'danny', id:2}],
-	
+
 		}
 		this.handleUserClick = this.handleUserClick.bind(this)
 	}
 
 	componentDidMount () {
-		fetch('/profile/friends', {credentials: 'include'})
-			.then(response => {
-				console.log(response);
-				return response.json()
-			})
-      		.then(response => {
-          		this.setState({
-						friends: response
-			})
-			console.log('new STATE', this.state.friends)
-      })
-    
+		// fetch('/profile/friends', {credentials: 'include'})
+		// 	.then(response => {
+		// 		console.log(response);
+		// 		return response.json()
+		// 	})
+    //   		.then(response => {
+    //       		this.setState({
+		// 				friends: response
+		// 	})
+		// 	console.log('new STATE', this.state.friends)
+    //   })
+
 	}
 
 	handleUserClick (userinfo) {
@@ -37,11 +37,11 @@ class Friends extends Component {
 				<Card.Content>
 				<Card.Header>Friends
 				</Card.Header>
-					{this.state.friends.map((user) => 	
-						<FriendEntry 
-						user={user} 
-						key={user.id} 
-						handleUserClick={this.handleUserClick}/>	
+					{this.props.friends.map((user) =>
+						<FriendEntry
+						user={user}
+						key={user.id}
+						handleUserClick={this.handleUserClick}/>
 						)}
 				</Card.Content>
 			</Card>

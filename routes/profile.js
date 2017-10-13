@@ -62,7 +62,7 @@ router.post('/', (req, res) => {
 
 router.get('/friends', (req, res) => {
   //Send back user data of the current users friends
-  var userId = req.session.passport.user;
+  var userId = req.headers.user
   db.friendList(userId, (result)=> {
     Promise.all(result.map(function(el) {
         return new Promise ((resolve, reject) => {
