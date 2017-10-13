@@ -4,19 +4,14 @@ var db = require('../database/index.js');
 
 router.post('/', (req, res) => {
   var options = req.body;
-  console.log('REQUEST USER', req.body)
-  //options.userId = req.user.id;
+  
   db.getAboutMe(options.userId, results => {
     if (results.length === 0) {
-      console.log("no user info yet")
       db.insertAboutMe(options, (result) => {
-        console.log('about to callback')
         res.send(result)
       })
     } else {
-      console.log("has user info")
       db.updateAboutMe(options, (result) => {
-        console.log('about to callback')
         res.send(result)
       })
     }

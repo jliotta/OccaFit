@@ -82,8 +82,10 @@ class Profile extends Component {
 	render() {
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
-				<ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
-
+				{this.state.user && this.props.user 
+					? <ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
+					: null
+				}
 				<Card.Group itemsPerRow={3}>
 					<Activities user={this.state.user} activities={this.state.activities}/>
 					<AboutMe user={this.state.user} info={this.state.info} showSetupModal={this.showSetupModal.bind(this)}/>
