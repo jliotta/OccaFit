@@ -71,10 +71,6 @@ class MainNav extends Component {
         <Menu.Item name='listings' as={NavLink} to='/listings' />
         <Menu.Item name='about' as={NavLink} to='/about' />
         <Menu.Menu position='right'>
-          <Menu.Item>
-            <Dropdown placeholder='Search Users' fluid search selection options={this.state.options} style={{width: "250px"}} onChange={this.searchUser}/>
-            {this.state.search ? <Redirect push to={this.state.path} /> : null}
-          </Menu.Item>
           {!this.props.isAuthed && ([
             <Menu.Item style={{paddingLeft: '0px'}}>
               {/*<Button content='Log In' onClick={this.handleLoginClick} /> */}
@@ -87,6 +83,10 @@ class MainNav extends Component {
           ])}
 
           {this.props.isAuthed && ([
+            <Menu.Item>
+              <Dropdown placeholder='Search Users' fluid search selection options={this.state.options} style={{width: "250px"}} onChange={this.searchUser}/>
+              {this.state.search ? <Redirect push to={this.state.path} /> : null}
+            </Menu.Item>,
             <Menu.Item style={{paddingLeft: '0px'}}>
               <Button as={Link} to='/create' primary content='Create Listing' />
             </Menu.Item>,
