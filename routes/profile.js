@@ -68,9 +68,9 @@ router.get('/relationship', (req, res) => {
 });
 
 router.patch('/accept', (req, res) => {
-  console.log('INSIDE ACCEPT:', req);
-  db.acceptFriendRequest(req.body.user1.id, req.body.user2.id, (data) => {
-    console.log('DATA of Acceptance:', data);
+  console.log('INSIDE PATCH:', req.body);
+  db.acceptFriendRequest(req.body.user1.userOneId, req.body.user2.id, (data) => {
+    console.log('GOT THE DATA!! ACCEPT')
     res.send(data);
   });
 });

@@ -145,14 +145,13 @@ class App extends Component {
         } else if (this.state.friendStatus === 1) {
           console.log('INSIDE ACCEPTED CHECK:', this);
           this.setState({
-            accepted: true,
-            requested: true
+            accepted: true
           })
         } 
       } else {
         this.setState({
           friendStatus: null,
-          requested: true
+          requested: false
         });
       }
     });
@@ -164,7 +163,7 @@ class App extends Component {
       <Router>
         <div>
           <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated}
-                   signoff={this.handleSignOff} user={this.state.user} getUser={this.getUser.bind(this)} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} getUserFriends={this.getUserFriends.bind(this)} changeProfile={this.changeProfile.bind(this)} checkFriendStatus={this.checkFriendStatus.bind(this)} />
+                   signoff={this.handleSignOff} user={this.state.user} currentProfile={this.state.currentProfile} getUser={this.getUser.bind(this)} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} getUserFriends={this.getUserFriends.bind(this)} changeProfile={this.changeProfile.bind(this)} checkFriendStatus={this.checkFriendStatus.bind(this)} />
           <Switch>
             <Route exact path='/' render={props => (
               <Home user={this.state.user} visible={this.state.visible} {...props} />

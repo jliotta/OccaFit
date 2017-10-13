@@ -22,7 +22,7 @@ class ProfilePic extends Component {
   pic = '/' + this.images[Math.floor(Math.random() * this.images.length)];
 
   handleFriendRequests() {
-    if (!this.props.requested){
+    if (!this.props.requested && !this.props.accepted){
       var options = {
         credentials: 'include',
         headers: {

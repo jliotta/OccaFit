@@ -267,6 +267,8 @@ var acceptFriendRequest = function (user1Id, user2Id, callback) {
     if(err) {
       console.log('error accepting friend request:', err);
     } else {
+    	console.log('RESULT:', result)
+    	console.log('UPDATED FRIEND ACCEPT')
       callback(result)
     }
   })
@@ -357,9 +359,6 @@ module.exports = {
   getUsers,
   friendRequest,
   checkFriendStatus,
-<<<<<<< HEAD
-  getPendingFriendRequests
-=======
+  getPendingFriendRequests,
   acceptFriendRequest
->>>>>>> Accept friend request
 };
