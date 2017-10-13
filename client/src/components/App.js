@@ -27,7 +27,8 @@ class App extends Component {
       currentProfile: null,
       friends: [],
       friendStatus: null,
-      requested: null
+      requested: null,
+      accepted: null
     }
 
     this.cookies = new Cookies();
@@ -141,7 +142,13 @@ class App extends Component {
           this.setState({
             requested: true
           });
-        }
+        } else if (this.state.friendStatus === 1) {
+          console.log('INSIDE ACCEPTED CHECK:', this);
+          this.setState({
+            accepted: true,
+            requested: true
+          })
+        } 
       } else {
         this.setState({
           friendStatus: null,
@@ -151,14 +158,13 @@ class App extends Component {
     });
   }
 
-
   render() {
-    console.log("IN APP USER", this.state.user)
+    console.log("IN APP USER", this)
     return (
       <Router>
         <div>
           <MainNav authenticate={this.handleAuthenticated} isAuthed={this.state.authenticated}
-                   signoff={this.handleSignOff} user={this.state.user} getUser={this.getUser.bind(this)} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} getUserFriends={this.getUserFriends.bind(this)} changeProfile={this.changeProfile.bind(this)} checkFriendStatus={this.checkFriendStatus.bind(this)} />
+                   signoff={this.handleSignOff} user={this.state.user} currentProfile={this.state.currentProfile} getUser={this.getUser.bind(this)} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} getUserFriends={this.getUserFriends.bind(this)} changeProfile={this.changeProfile.bind(this)} checkFriendStatus={this.checkFriendStatus.bind(this)} />
           <Switch>
             <Route exact path='/' render={props => (
               <Home user={this.state.user} visible={this.state.visible} {...props} />
@@ -186,7 +192,7 @@ class App extends Component {
 
 
             <Route path="/profile/:id" render={props => (
-              <Profile user={this.state.user} currentProfile={this.state.currentProfile} getUser={this.getUser.bind(this)} getUserFriends={this.getUserFriends.bind(this)} friends={this.state.friends} router={Router} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} activities={this.state.activities} info={this.state.info} route={Route} {...props} checkFriendStatus={this.checkFriendStatus.bind(this)} friendStatus={this.state.friendStatus} requested={this.state.requested}/>
+              <Profile user={this.state.user} currentProfile={this.state.currentProfile} getUser={this.getUser.bind(this)} getUserFriends={this.getUserFriends.bind(this)} friends={this.state.friends} router={Router} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} activities={this.state.activities} info={this.state.info} route={Route} {...props} checkFriendStatus={this.checkFriendStatus.bind(this)} friendStatus={this.state.friendStatus} requested={this.state.requested} accepted={this.state.accepted}/>
             )} />
 
             <Route exact path='/create' render={props => (

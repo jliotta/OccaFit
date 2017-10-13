@@ -4,20 +4,26 @@ import { Menu, Input, Button, Dropdown, Card } from 'semantic-ui-react';
 class NotificationListEntry extends Component {
   constructor(props) {
     super(props);
-    this.handleAccept = this.handleAccept.bind(this);
-    this.handleDecline = this.handleDecline.bind(this);
+    this.state = {
+      accepted: null,
+      declined: null
+    }
+    console.log('Notification Entry:', this);
   }
 
-  handleAccept() {
-    this.props.handleAcceptClick(this.props.notification);
+  handleFriendAcceptance(user1, user2) {
+    console.log('CLICKED ACCEPT')
+    this.props.acceptFriendRequest(user1, user2);
   }
 
   handleDecline() {
     this.props.handleDeclineClick(this.props.notification);
+    this.setState({
+      accepted: true
+    });
   }
 
   render() {
-    console.log(this.props)
     return (
       <Card color='blue'>
         <Card.Content>
@@ -25,7 +31,7 @@ class NotificationListEntry extends Component {
         </Card.Content>
         <Card.Content>
           <Button.Group size="mini" attached="bottom">
-            <Button color="blue" onClick={this.handleAccept}>Accept</Button>
+            <Button color={this.state.accepted ? 'teal' : 'green'} onClick={() => this.handleFriendAcceptance(this.props.user, this.props.notification)}>{this.state.accepted ? 'Accepted!' : 'Accept'}</Button>
             <Button basic color="blue" onClick={this.handleDecline}>Decline</Button>
           </Button.Group>
         </Card.Content>

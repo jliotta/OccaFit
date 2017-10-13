@@ -15,6 +15,7 @@ class MainNav extends Component {
     };
     this.searchUser = this.searchUser.bind(this);
     this.changeUser = this.changeUser.bind(this);
+    console.log('MAIN NAV:', this)
   }
 
   getSearchOptions() {
@@ -38,6 +39,7 @@ class MainNav extends Component {
     this.props.getUserActivities(userId);
     this.props.getAboutMe(userId);
     this.props.getUserFriends(userId);
+    this.props.checkFriendStatus(this.props.user.id, userId);
     // this.props.changeProfile();
     this.setState({path: newPath});
     this.setState({search: true});
@@ -56,6 +58,7 @@ class MainNav extends Component {
     this.props.getUserActivities(id);
     this.props.getAboutMe(id);
     this.props.getUserFriends(id);
+    this.props.checkFriendStatus(id, this.props.currentProfile.id);
   }
 
   signOutRedirect = () => {}
@@ -64,6 +67,18 @@ class MainNav extends Component {
     this.getSearchOptions();
     this.setState({search: false});
   };
+
+  acceptFriendRequest(currentUser, otherUser) {
+    var options = {
+      credentials: 'include',
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({user1: otherUser, user2: currentUser})
+    };
+    fetch('/profile/accept', options);
+  }
 
   render() {
     return (
@@ -100,10 +115,10 @@ class MainNav extends Component {
                 <Dropdown.Item onClick={this.props.signoff} as={Link} to='/'>Log Out</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>,
-            <Dropdown text="Notifications" className='link item' pointing>
+            <Dropdown text="Notifications" className='link item' multiple>
               <Dropdown.Menu>
                 <Dropdown.Item>
-                  <NotificationList user={this.props.user}/>
+                  <NotificationList user={this.props.user} acceptFriendRequest={this.acceptFriendRequest} />
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
