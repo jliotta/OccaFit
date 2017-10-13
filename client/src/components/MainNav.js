@@ -105,7 +105,6 @@ class MainNav extends Component {
             </Menu.Item>,
             <Menu.Item style={{paddingLeft: '0px'}}>
               <Button as={Link} to='/create' primary content='Create Listing' />
-              <Button color="teal" content="Accept Request" onClick={() => this.acceptFriendRequest(this.props.user, {'name': 'Bren', id: '3'})}/>
             </Menu.Item>,
             <Dropdown text={this.props.user.name} className='link item' pointing>
               <Dropdown.Menu>
