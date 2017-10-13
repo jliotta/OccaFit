@@ -25,9 +25,7 @@ var createUser = function(userObj) {
 		        connection.query(query, [userObj.name, userObj.username, userObj.password], function(err, result){
 		        	if (err) {
 		        		console.log('error inserting user');
-		        	} else {
-		        		console.log('successfully added');
-		        	}
+		        	} 
 		        })
 		    });
 		});
@@ -39,7 +37,6 @@ var checkUser = function(username, callback) {
 		if (err) {
 			console.log('error when finding user', err);
 		} else{
-			console.log('result of finding a user', dbUserResult);
 			if (dbUserResult.length === 0) {
 				callback(err, null);
 			}
@@ -49,7 +46,6 @@ var checkUser = function(username, callback) {
 }
 
 var comparePassword = function(passwordEntered, hash, callback) {
-	console.log('inside compare password');
 	bcrypt.compare(passwordEntered, hash, function(err, isMatch){
 		if (err) throw err;
 		callback(null, isMatch)
@@ -58,8 +54,6 @@ var comparePassword = function(passwordEntered, hash, callback) {
 };
 
 var findById = function(id, callback) {
-	console.log('database finding by id');
-
 	var query = 'SELECT * from users WHERE id = ?';
 	connection.query(query, [id], function(err, dbResultArr){
 		if (err) {
@@ -84,7 +78,6 @@ var getWorkouts = function(id, callback) {
 		if (err) {
 			console.error('Error getting postings', err);
 		} else {
-			console.log('DB POSTING RESULTS:', result);
 			callback(result);
 		}
 	});
@@ -97,7 +90,6 @@ var getSingleWorkout = function(postingId, callback){
 		if (err) {
 			console.log('error getting single posting');
 		} else {
-			console.log('SINGLE POSTING with username RESULT:', result);
 			callback(result);
 		}
 	});
@@ -111,7 +103,6 @@ var createWorkout = function(workoutObj, callback) {
 		if (err) {
 			console.log('error creating workout', err);
 		} else {
-			console.log('created workout result:', result);
 			callback(result);
 		}
 	});
@@ -123,7 +114,6 @@ var createProfile = function(profileObj, callback) {
 		if (err) {
 			console.log('error creating profile');
 		} else {
-			console.log('created profile result:', result);
 			callback(result);
 		}
 	});
@@ -141,7 +131,6 @@ var getUserPostings = function(userId, callback) {
 		if (err) {
 			console.log('error getting posting by userId', err);
 		} else {
-			console.log('success posting by userId:', result);
 			callback(result);
 		}
 	});
@@ -153,7 +142,6 @@ var getRequestsByPostingId = function(postingId, callback) {
 		if (err) {
 			console.log('error getting posting by userId');
 		} else {
-			console.log('success posting by userId:', result);
 			callback(result);
 		}
 	});
@@ -167,7 +155,6 @@ var getUserRequestPostings = function(userId, callback) {
 		if (err) {
 			console.log('error getting requests by userId');
 		} else {
-			console.log('success requests by userId:', result);
 			callback(result);
 		}
 	});
@@ -179,7 +166,6 @@ var createRequest = function(requestObj, callback) {
 		if (err) {
 			console.log('error creating request', err);
 		} else {
-			console.log('created request:', result);
 			callback(result);
 		}
 	});
@@ -206,7 +192,6 @@ var getUserAcceptPostings = function(userId, callback) {
 		if (err) {
 			console.log('error getting accepted requests');
 		} else {
-			console.log('accepted requests', result);
 			callback(result);
 		}
 	});
@@ -219,7 +204,6 @@ var updateRequest = function(userId, callback) {
 		if (err) {
 			console.log('error updating reqest');
 		} else {
-			console.log('updated request to accept!', result);
 			callback(result);
 		}
 	});
@@ -232,7 +216,6 @@ var getAboutMe = function(userid, callback) {
     if (err) {
       console.error('error updating request', err);
     } else {
-      console.log('grabbed profile about me info', result);
       callback(result);
     }
   })
@@ -248,7 +231,6 @@ var insertAboutMe = function(options, callback) {
     if (err) {
       console.log('error inserting about me', err);
     } else {
-      console.log('inserted profile about me info', result)
       callback(result);
     }
   })
@@ -260,7 +242,6 @@ var friendList = function (userId, callback) {
     if(err) {
       console.log('error on query 1 of friendlist');
     } else {
-      console.log('yesssss', result);
       callback(result);
     }
   })
@@ -268,30 +249,39 @@ var friendList = function (userId, callback) {
 };
 
 var friendRequest = function (user1Id, user2Id, callback) {
-  var query = "INSERT INTO relationship (userOneId, userTwoId, statusId, userOneId) VALUES (?, ?, 0, ?)";
-  connection.query(query, [user1Id, user2Id, userOne], function(err, result) {
+  var query = "INSERT INTO relationship (userOneId, userTwoId, statusId, actionId) VALUES (?, ?, 0, ?)";
+  connection.query(query, [user1Id, user2Id, user1Id], function(err, result) {
     if(err) {
-      console.log('error making a friendrequest');
+      console.log('error making a friendrequest:', err);
     } else {
       console.log('request pending for friend request', result)
-      calllback(result)
+      callback(result);
     }
   })
 
 };
 
-var acceptFriendRequest = function (user1Id, user2Id,callback) {
+var acceptFriendRequest = function (user1Id, user2Id, callback) {
   var query = "UPDATE relationship SET statusId = 1, actionId = ? WHERE userOneId = ? AND userTwoId = ?";
-  connection.query(query, [user2Id, user1Id, user2Id], function(err, result) {
+  connection.query(query, [user1Id, user2Id, use1Id], function(err, result) {
     if(err) {
-      console.log('error accepting friend request');
+      console.log('error accepting friend request:', err);
     } else {
-      console.log('accepted friend request', result)
-      calllback(result)
+      callback(result)
     }
   })
-
 };
+
+var checkFriendStatus = function(user1Id, user2Id, callback) {
+	var query = 'SELECT statusId from relationship WHERE userOneId = ? AND userTwoId = ?';
+	connection.query(query, [user1Id, user2Id], function(err, result) {
+		if (err) {
+			console.log('Error Checking Friend Status:', err);
+		} else {
+			callback(result);
+		}
+	});
+}
 
 
 
@@ -303,7 +293,6 @@ var updateAboutMe = function(options, callback) {
     if (err) {
       console.log('error updating about me', err);
     } else {
-      console.log('updated profile about me info', result)
       callback(result);
     }
   })
@@ -316,7 +305,6 @@ var getUsers = function(callback) {
     if (err) {
       console.log('error getting all users', err)
     } else {
-      console.log('got all users from db', results)
       callback(results);
     }
   })
@@ -343,5 +331,7 @@ module.exports = {
   updateAboutMe,
   insertAboutMe,
   friendList,
-  getUsers
+  getUsers,
+  friendRequest,
+  checkFriendStatus
 };

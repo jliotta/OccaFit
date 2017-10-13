@@ -152,15 +152,10 @@ class App extends Component {
               <Dashboard listings={data} {...props} />
             )} />
 
-            {/* <Route path='/profile' render={props => (
-              <Profile user={this.state.user} router={Router} route={Route} {...props}/>
-            )} /> */}
 
             <Route path="/profile/:id" render={props => (
               <Profile user={this.state.user} currentProfile={this.state.currentProfile} getUser={this.getUser.bind(this)} getUserFriends={this.getUserFriends.bind(this)} friends={this.state.friends} router={Router} getAboutMe={this.getAboutMe.bind(this)} getUserActivities={this.getUserActivities.bind(this)} activities={this.state.activities} info={this.state.info} route={Route} {...props}/>
             )} />
-
-            {/* <Route path="/profile/:id" component={Profile} /> */}
 
             <Route exact path='/create' render={props => (
               <CreateListing {...props} />

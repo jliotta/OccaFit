@@ -13,18 +13,16 @@ class Friends extends Component {
 	}
 
 	componentDidMount () {
-		// fetch('/profile/friends', {credentials: 'include'})
-		// 	.then(response => {
-		// 		console.log(response);
-		// 		return response.json()
-		// 	})
-    //   		.then(response => {
-    //       		this.setState({
-		// 				friends: response
-		// 	})
-		// 	console.log('new STATE', this.state.friends)
-    //   })
-
+		fetch('/profile/friends', {credentials: 'include'})
+			.then(response => {
+				return response.json()
+			})
+      		.then(response => {
+          		this.setState({
+						friends: response
+			})
+      })
+    
 	}
 
 	handleUserClick (userinfo) {

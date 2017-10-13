@@ -8,7 +8,6 @@ class AboutMe extends Component {
 	}
 
 	render() {
-		console.log('current user', this.props.user)
 		return (
 				<Card>
 					<Card.Content>

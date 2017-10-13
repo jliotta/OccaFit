@@ -54,28 +54,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
-app.use(function (req, res, next) {
-  console.log('body', req.body);
-  console.log('session', req.session);
-  console.log('isAuth?', req.isAuthenticated());
-  console.log('req user:', req.user);
-  console.log('cookie', req.cookies);
-  next();
-})
-
-
 app.use('/register', routeRegister);
 app.use('/setup', routeSetup);
 app.use('/login', routeLogin);
 app.use('/search', routeSearch);
 app.use('/postings', routePostings);
-
-
 app.use(checkAuth);
 
 // Below are the protected routes
-console.log('about to go to PROFILE')
+
 app.use('/profile', routeProfile);
 app.use('/workout', routeWorkout);
 app.use('/dashboard', routeDashboard);
