@@ -6,7 +6,7 @@ class NotificationList extends Component {
   constructor (props){
     super(props);
     this.state = {
-      notifications: null
+      notifications: []
     }
   }
 
@@ -22,6 +22,14 @@ class NotificationList extends Component {
       })
   }
 
+  handleAcceptClick(requestor) {
+    console.log('I clicked ACCEPT on friend request from', requestor.name)
+  }
+
+  handleDeclineClick(requestor) {
+    console.log('I clicked DECLINE on friend request from', requestor.name)
+  }
+
   componentWillMount() {
     this.getPendingRequests();
   }
@@ -30,9 +38,9 @@ class NotificationList extends Component {
     console.log('NOTIFICATIONS', this.state.notifications)
     return (
       <Card.Group>
-        {this.state.notifications && this.state.notifications.map(notification => {
-          return <NotificationListEntry notification={notification}/>
-        })}
+        {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
+          return <NotificationListEntry notification={notification} handleAcceptClick={this.handleAcceptClick.bind(this)} handleDeclineClick={this.handleDeclineClick.bind(this)}/>
+        }) : <Card.Content>No Notifications</Card.Content>}
       </Card.Group>
     )
   }

@@ -313,7 +313,7 @@ var getUsers = function(callback) {
 
 //get pending friend requests
 var getPendingFriendRequests = function(id, callback) {
-  var query = 'select * from relationship where userTwoId = ? and statusId = 0';
+  var query = 'select relationship.userOneId, users.name from relationship inner join users on relationship.userOneId = users.id where relationship.userTwoId = ? and statusId = 0;';
   connection.query(query, [id], (err, results) => {
     if (err) {
       console.log('error getting pending requests', err)
