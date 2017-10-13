@@ -34,6 +34,11 @@ class ProfilePic extends Component {
             requested: true
           });
         }
+      } else {
+        this.setState({
+          message: 'Add Friend',
+          requested: false,
+        });
       }
     });
   }

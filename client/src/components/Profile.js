@@ -17,6 +17,7 @@ class Profile extends Component {
 			shouldIUpdate: true,
 		}
 		this.pullAboutMeData = this.pullAboutMeData.bind(this);
+		console.log('PROFPROFPROF:', this);
 	}
 
 	showSetupModal() {
@@ -30,6 +31,14 @@ class Profile extends Component {
 		var id = this.props.match.params.id;
 		this.props.getAboutMe(id);
   }
+
+  componentWillMount() {
+		var id = this.props.match.params.id;
+			this.props.getUser(id);
+			this.pullAboutMeData();
+			this.getActivities();
+			this.getFriends();
+	}
 
 	// componentDidUpdate(){
 	// 	//this.checkAuth();
@@ -75,8 +84,8 @@ class Profile extends Component {
 		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
-				{this.state.user && this.props.user 
-					? <ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
+				{this.props.user && this.props.currentProfile 
+					? <ProfilePic user={this.props.currentProfile} currentUser={this.props.user} name={this.props.currentProfile && this.props.currentProfile.name}/>
 					: null
 				}
 				<Card.Group itemsPerRow={3}>
