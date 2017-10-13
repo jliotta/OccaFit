@@ -38,6 +38,7 @@ var routeDashboard = require('../routes/dashboard');
 var routeLogout = require('../routes/logout');
 var routeSetup = require('../routes/setup');
 var routeSearch = require('../routes/search');
+var routeNotifications = require('../routes/notifications');
 
 
 
@@ -58,6 +59,7 @@ app.use('/register', routeRegister);
 app.use('/setup', routeSetup);
 app.use('/login', routeLogin);
 app.use('/search', routeSearch);
+app.use('/notification', routeNotifications);
 app.use('/postings', routePostings);
 app.use(checkAuth);
 

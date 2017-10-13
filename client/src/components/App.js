@@ -117,7 +117,7 @@ class App extends Component {
           		this.setState({
 						friends: response
 			})
-			console.log('new STATE', this.state.friends)
+			console.log('NEW FRIENDSSSS', this.state.friends)
       })
   }
 
@@ -125,7 +125,7 @@ class App extends Component {
     var options = {
       credentials: 'include',
       headers: {
-        currentUser: user1, 
+        currentUser: user1,
         otherUser: user2
       }
     }
@@ -141,7 +141,7 @@ class App extends Component {
           this.setState({
             requested: true
           });
-        } 
+        }
       } else {
         this.setState({
           friendStatus: null,

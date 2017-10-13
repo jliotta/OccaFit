@@ -25,7 +25,7 @@ var createUser = function(userObj) {
 		        connection.query(query, [userObj.name, userObj.username, userObj.password], function(err, result){
 		        	if (err) {
 		        		console.log('error inserting user');
-		        	} 
+		        	}
 		        })
 		    });
 		});
@@ -309,6 +309,19 @@ var getUsers = function(callback) {
     }
   })
 }
+
+
+//get pending friend requests
+var getPendingFriendRequests = function(id, callback) {
+  var query = 'select relationship.userOneId, users.name from relationship inner join users on relationship.userOneId = users.id where relationship.userTwoId = ? and statusId = 0;';
+  connection.query(query, [id], (err, results) => {
+    if (err) {
+      console.log('error getting pending requests', err)
+    } else {
+      callback(results);
+    }
+  })
+}
 //insert into postings (title, location, date, duration, details, meetup_spot, buddies, userId) values ('hike', 'sf', '2017-01-01 00:00:00', 1, 'hike in muir woods', 'parking', 2, 1);
 
 module.exports = {
@@ -333,5 +346,6 @@ module.exports = {
   friendList,
   getUsers,
   friendRequest,
-  checkFriendStatus
+  checkFriendStatus,
+  getPendingFriendRequests
 };

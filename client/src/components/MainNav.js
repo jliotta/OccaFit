@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import LoginButtonModal from './LoginButtonModal.js';
-import { Menu, Input, Button, Dropdown } from 'semantic-ui-react';
+import { Menu, Input, Button, Dropdown, Card } from 'semantic-ui-react';
 import { NavLink, Link, Redirect } from 'react-router-dom';
+import NotificationList from './NotificationList.js';
 
 class MainNav extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class MainNav extends Component {
     this.state = {
       options: '',
       search: false,
-      path: ''
+      path: '',
     };
     this.searchUser = this.searchUser.bind(this);
     this.changeUser = this.changeUser.bind(this);
@@ -37,7 +38,6 @@ class MainNav extends Component {
     this.props.getUserActivities(userId);
     this.props.getAboutMe(userId);
     this.props.getUserFriends(userId);
-    this.props.checkFriendStatus(this.props.user.id, userId);
     // this.props.changeProfile();
     this.setState({path: newPath});
     this.setState({search: true});
@@ -56,7 +56,6 @@ class MainNav extends Component {
     this.props.getUserActivities(id);
     this.props.getAboutMe(id);
     this.props.getUserFriends(id);
-    this.props.checkFriendStatus(this.props.user.id, this.props.user.id);
   }
 
   signOutRedirect = () => {}
@@ -73,11 +72,6 @@ class MainNav extends Component {
         <Menu.Item name='listings' as={NavLink} to='/listings' />
         <Menu.Item name='about' as={NavLink} to='/about' />
         <Menu.Menu position='right'>
-          <Menu.Item>
-            <Dropdown placeholder='Search Users' fluid search selection options={this.state.options} style={{width: "250px"}} onChange={this.searchUser}/>
-            {this.state.search ? <Redirect push to={this.state.path} /> : null}
-          </Menu.Item>
-
           {!this.props.isAuthed && ([
             <Menu.Item style={{paddingLeft: '0px'}}>
               {/*<Button content='Log In' onClick={this.handleLoginClick} /> */}
@@ -90,6 +84,10 @@ class MainNav extends Component {
           ])}
 
           {this.props.isAuthed && ([
+            <Menu.Item>
+              <Dropdown placeholder='Search Users' fluid search selection options={this.state.options} style={{width: "250px"}} onChange={this.searchUser}/>
+              {this.state.search ? <Redirect push to={this.state.path} /> : null}
+            </Menu.Item>,
             <Menu.Item style={{paddingLeft: '0px'}}>
               <Button as={Link} to='/create' primary content='Create Listing' />
             </Menu.Item>,
@@ -100,6 +98,13 @@ class MainNav extends Component {
                 <Dropdown.Item>Referral</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={this.props.signoff} as={Link} to='/'>Log Out</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>,
+            <Dropdown text="Notifications" className='link item' pointing>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <NotificationList user={this.props.user}/>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ])}
