@@ -77,10 +77,7 @@ class MainNav extends Component {
       },
       body: JSON.stringify({user1: otherUser, user2: currentUser})
     };
-    fetch('/profile/accept', options)
-    .then(data => {
-      console.log('GOT THE ACCEPTANCE')
-    });
+    fetch('/profile/accept', options);
   }
 
   render() {
@@ -108,6 +105,7 @@ class MainNav extends Component {
             </Menu.Item>,
             <Menu.Item style={{paddingLeft: '0px'}}>
               <Button as={Link} to='/create' primary content='Create Listing' />
+              <Button color="teal" content="Accept Request" onClick={() => this.acceptFriendRequest(this.props.user, {'name': 'Bren', id: '3'})}/>
             </Menu.Item>,
             <Dropdown text={this.props.user.name} className='link item' pointing>
               <Dropdown.Menu>

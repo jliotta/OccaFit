@@ -145,7 +145,8 @@ class App extends Component {
         } else if (this.state.friendStatus === 1) {
           console.log('INSIDE ACCEPTED CHECK:', this);
           this.setState({
-            accepted: true
+            accepted: true,
+            requested: true
           })
         } 
       } else {
