@@ -13,36 +13,16 @@ class ProfilePic extends Component {
   }
 
   componentDidMount() {
-    var options = {
-      credentials: 'include',
-      headers: {
-        currentUser: this.props.currentUser.id, 
-        otherUser: this.props.user.id
-      }
-    }
-    fetch('/profile/relationship', options)
-    .then(data => data.json())
-    .then(data => {
-      if (data.length > 0) {
-        console.log('DATA:', data)
-        this.setState({
-          status: data[0].statusId
-        });
-        if (this.state.status === 0) {
-          this.setState({
-            message: 'Request Pending',
-            requested: true
-          });
-        }
-      }
-    });
+    // currentUser: this.props.currentUser.id, 
+    // otherUser: this.props.user.id
+    this.props.checkFriendStatus(this.props.currentUser.id, this.props.user.id);
   }
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
   pic = '/' + this.images[Math.floor(Math.random() * this.images.length)];
 
   handleFriendRequests() {
-    if (!this.state.requested){
+    if (!this.props.requested){
       var options = {
         credentials: 'include',
         headers: {
@@ -70,7 +50,7 @@ class ProfilePic extends Component {
             <List.Item>
               <List.Header>{this.props.name}</List.Header>
               {this.props.user && this.props.user.id !== this.props.currentUser.id
-                ? <Button color={this.state.requested ? 'green' : 'blue'} onClick={() => this.handleFriendRequests()}> {this.state.message} </Button>
+                ? <Button color={this.props.requested ? 'green' : 'blue'} onClick={() => this.handleFriendRequests()}> {this.props.requested ? 'Request Pending' : 'Add Friend'} </Button>
                 : null
               }
             </List.Item>
