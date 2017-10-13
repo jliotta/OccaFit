@@ -263,7 +263,7 @@ var friendRequest = function (user1Id, user2Id, callback) {
 
 var acceptFriendRequest = function (user1Id, user2Id, callback) {
   var query = "UPDATE relationship SET statusId = 1, actionId = ? WHERE userOneId = ? AND userTwoId = ?";
-  connection.query(query, [user1Id, user2Id, use1Id], function(err, result) {
+  connection.query(query, [user2Id, user1Id, user2Id], function(err, result) {
     if(err) {
       console.log('error accepting friend request:', err);
     } else {
@@ -278,7 +278,17 @@ var checkFriendStatus = function(user1Id, user2Id, callback) {
 		if (err) {
 			console.log('Error Checking Friend Status:', err);
 		} else {
-			callback(result);
+			if (result.length === 0) {
+				connection.query(query, [user2Id, user1Id], function(err, result) {
+					if (err) {
+						console.log('Error Checking Friend Status:', err);
+					} else {
+						callback(result);
+					}
+				});
+			} else {
+				callback(result);
+			}
 		}
 	});
 }
@@ -347,5 +357,9 @@ module.exports = {
   getUsers,
   friendRequest,
   checkFriendStatus,
+<<<<<<< HEAD
   getPendingFriendRequests
+=======
+  acceptFriendRequest
+>>>>>>> Accept friend request
 };
