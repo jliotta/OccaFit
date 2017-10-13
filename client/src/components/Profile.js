@@ -17,7 +17,10 @@ class Profile extends Component {
 			shouldIUpdate: true,
 		}
 		this.pullAboutMeData = this.pullAboutMeData.bind(this);
+<<<<<<< HEAD
 		console.log('PROFPROFPROF:', this);
+=======
+>>>>>>> b7cedd055dc986dbb0b241e52a6d0f3bb921df7b
 	}
 
 	showSetupModal() {
@@ -27,7 +30,6 @@ class Profile extends Component {
 	}
 
 	pullAboutMeData() {
-
 		var id = this.props.match.params.id;
 		this.props.getAboutMe(id);
   }
@@ -84,8 +86,13 @@ class Profile extends Component {
 		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
+<<<<<<< HEAD
 				{this.props.user && this.props.currentProfile 
 					? <ProfilePic user={this.props.currentProfile} currentUser={this.props.user} name={this.props.currentProfile && this.props.currentProfile.name}/>
+=======
+				{this.state.user && this.props.user 
+					? <ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
+>>>>>>> b7cedd055dc986dbb0b241e52a6d0f3bb921df7b
 					: null
 				}
 				<Card.Group itemsPerRow={3}>

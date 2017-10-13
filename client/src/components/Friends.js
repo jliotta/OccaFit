@@ -12,6 +12,19 @@ class Friends extends Component {
 		this.handleUserClick = this.handleUserClick.bind(this)
 	}
 
+	componentDidMount () {
+		fetch('/profile/friends', {credentials: 'include'})
+			.then(response => {
+				return response.json()
+			})
+      		.then(response => {
+          		this.setState({
+						friends: response
+			})
+      })
+    
+	}
+
 	handleUserClick (userinfo) {
 		console.log("friend was clicked", userinfo)
 	}
