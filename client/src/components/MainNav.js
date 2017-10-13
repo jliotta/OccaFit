@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import LoginButtonModal from './LoginButtonModal.js';
-import { Menu, Input, Button, Dropdown } from 'semantic-ui-react';
+import { Menu, Input, Button, Dropdown, Card } from 'semantic-ui-react';
 import { NavLink, Link, Redirect } from 'react-router-dom';
+import NotificationList from './NotificationList.js';
 
 class MainNav extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class MainNav extends Component {
     this.state = {
       options: '',
       search: false,
-      path: ''
+      path: '',
     };
     this.searchUser = this.searchUser.bind(this);
     this.changeUser = this.changeUser.bind(this);
@@ -97,6 +98,13 @@ class MainNav extends Component {
                 <Dropdown.Item>Referral</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={this.props.signoff} as={Link} to='/'>Log Out</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>,
+            <Dropdown text="Notifications" className='link item' pointing>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <NotificationList user={this.props.user}/>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ])}
