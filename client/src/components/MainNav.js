@@ -37,7 +37,6 @@ class MainNav extends Component {
     this.props.getUserActivities(userId);
     this.props.getAboutMe(userId);
     this.props.getUserFriends(userId);
-    this.props.checkFriendStatus(this.props.user.id, userId);
     // this.props.changeProfile();
     this.setState({path: newPath});
     this.setState({search: true});
@@ -56,7 +55,6 @@ class MainNav extends Component {
     this.props.getUserActivities(id);
     this.props.getAboutMe(id);
     this.props.getUserFriends(id);
-    this.props.checkFriendStatus(this.props.user.id, this.props.user.id);
   }
 
   signOutRedirect = () => {}
@@ -77,7 +75,6 @@ class MainNav extends Component {
             <Dropdown placeholder='Search Users' fluid search selection options={this.state.options} style={{width: "250px"}} onChange={this.searchUser}/>
             {this.state.search ? <Redirect push to={this.state.path} /> : null}
           </Menu.Item>
-
           {!this.props.isAuthed && ([
             <Menu.Item style={{paddingLeft: '0px'}}>
               {/*<Button content='Log In' onClick={this.handleLoginClick} /> */}
