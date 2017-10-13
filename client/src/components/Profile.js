@@ -75,8 +75,10 @@ class Profile extends Component {
 		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
-				<ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
-
+				{this.state.user && this.props.user 
+					? <ProfilePic user={this.state.user} currentUser={this.props.user} name={this.state.user && this.state.user.name}/>
+					: null
+				}
 				<Card.Group itemsPerRow={3}>
 					<Activities user={this.props.currentProfile} activities={this.props.activities}/>
 					<AboutMe user={this.props.currentProfile} info={this.props.info} showSetupModal={this.showSetupModal.bind(this)}/>
