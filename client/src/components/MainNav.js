@@ -66,6 +66,18 @@ class MainNav extends Component {
     this.setState({search: false});
   };
 
+  acceptFriendRequest(currentUser, otherUser) {
+    var options = {
+      credentials: 'include',
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({user1: otherUser, user2: currentUser})
+    };
+    fetch('/profile/accept', options);
+  }
+
   render() {
     return (
       <Menu secondary size='huge' style={{marginBottom: 0}}>
@@ -92,6 +104,7 @@ class MainNav extends Component {
           {this.props.isAuthed && ([
             <Menu.Item style={{paddingLeft: '0px'}}>
               <Button as={Link} to='/create' primary content='Create Listing' />
+              <Button color="teal" content="Accept Request" onClick={() => this.acceptFriendRequest(this.props.user, {'name': 'Bren', id: '3'})}/>
             </Menu.Item>,
             <Dropdown text={this.props.user.name} className='link item' pointing>
               <Dropdown.Menu>

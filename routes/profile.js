@@ -67,6 +67,14 @@ router.get('/relationship', (req, res) => {
   }
 });
 
+router.patch('/accept', (req, res) => {
+  console.log('INSIDE ACCEPT:', req);
+  db.acceptFriendRequest(req.body.user1.id, req.body.user2.id, (data) => {
+    console.log('DATA of Acceptance:', data);
+    res.send(data);
+  });
+});
+
 router.get('/friends', (req, res) => {
   //Send back user data of the current users friends
   var userId = req.headers.user
