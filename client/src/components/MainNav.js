@@ -36,6 +36,7 @@ class MainNav extends Component {
     this.props.getUser(userId);
     this.props.getUserActivities(userId);
     this.props.getAboutMe(userId);
+    this.props.getUserFriends(userId);
     // this.props.changeProfile();
     this.setState({path: newPath});
     this.setState({search: true});
@@ -53,6 +54,7 @@ class MainNav extends Component {
     this.props.getUser(id);
     this.props.getUserActivities(id);
     this.props.getAboutMe(id);
+    this.props.getUserFriends(id);
   }
 
   signOutRedirect = () => {}

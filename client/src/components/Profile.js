@@ -68,6 +68,7 @@ class Profile extends Component {
 			this.props.getUser(id);
 			this.pullAboutMeData();
 			this.getActivities();
+			this.getFriends();
 	}
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
@@ -78,6 +79,11 @@ class Profile extends Component {
 	getActivities() {
 		var id = this.props.match.params.id;
 		this.props.getUserActivities(id);
+	}
+
+	getFriends() {
+		var id = this.props.match.params.id;
+		this.props.getUserFriends(id);
 	}
 
 
@@ -91,7 +97,7 @@ class Profile extends Component {
 				<Card.Group itemsPerRow={3}>
 					<Activities user={this.props.currentProfile} activities={this.props.activities}/>
 					<AboutMe user={this.props.currentProfile} info={this.props.info} showSetupModal={this.showSetupModal.bind(this)}/>
-					<Friends />
+					<Friends friends={this.props.friends}/>
 				</Card.Group>
 			</Container>,
 			<Container>
