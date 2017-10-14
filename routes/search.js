@@ -4,15 +4,19 @@ var db = require('../database/index.js');
 
 
 router.get('/', (req, res) => {
-  db.getUsers((results) => {
-    var options = results.map( (result) => {
-      return {
-        key: result.id,
-        text: result.name,
-        value: result.id
-      }
-    });
-    res.send(options)
+  db.getUsers((err, results) => {
+    if (err) {
+      res.status(401);
+    } else {
+      var options = results.map( (result) => {
+        return {
+          key: result.id,
+          text: result.name,
+          value: result.id
+        }
+      });
+      res.send(options)
+    }
   })
 })
 

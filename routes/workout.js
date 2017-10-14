@@ -15,10 +15,14 @@ router.post('/', (req, res) => {
     meetup_spot: req.body.meetup_spot,
     userId: id
   };
-  db.createWorkout(workoutObj, (result) => {
-    res.redirect('/postings');
+  db.createWorkout(workoutObj, (err, result) => {
+    if (err) {
+      res.status(401);
+    } else {
+      res.redirect('/postings');
+    }
   });
-  
+
 });
 
 
