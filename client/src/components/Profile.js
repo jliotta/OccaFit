@@ -5,6 +5,7 @@ import Friends from './Friends';
 import ProfilePic from './ProfilePic';
 import Setup from './Setup';
 import { Container, Card } from 'semantic-ui-react';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 class Profile extends Component {
 	constructor(props) {
@@ -37,34 +38,6 @@ class Profile extends Component {
 			this.getActivities();
 			this.getFriends();
 	}
-
-	// componentDidUpdate(){
-	// 	//this.checkAuth();
-	// 	console.log('PROPS from comp will receive props', this.props)
-	// 	console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
-	// 	if (this.state.shouldIUpdate) {
-	// 		this.pullAboutMeData();
-	// 		this.getActivities();
-	// 		this.setState({shouldIUpdate: false});
-	// 	}
-	// }
-	//
-	// componentWillUnmount() {
-	// 	console.log('COMPONENT WILL UNMOUNT:', this.props);
-	// 	console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
-	// 	this.setState({shouldIUpdate: true}, () => {
-	// 		console.log('SHOULD I UPDATE?', this.state.shouldIUpdate);
-	// 	});
-	//
-	// }
-
-	// componentDidMount() {
-	// 	// if (this.props.user) {
-	// 		this.pullAboutMeData();
-	// 		this.getActivities();
-	// 	// }
-	// 	console.log('PARAMETER :id', this.props.match.params.id);
-	// }
 
 	getActivities() {
 		var id = this.props.match.params.id;

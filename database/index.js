@@ -247,7 +247,7 @@ var friendList = function (userId, callback) {
   connection.query(query1, [userId, userId], function(err, result) {
     if(err) {
       console.error('error on query 1 of friendlist');
-      result(err);
+      // result(err);
     } else {
       callback(result);
     }
@@ -275,7 +275,7 @@ var acceptFriendRequest = function (user1Id, user2Id, callback) {
       callback(err);
     } else {
       // console.log('accepted friend request', result)
-      calllback(result)
+      callback(result)
     }
   });
 };
