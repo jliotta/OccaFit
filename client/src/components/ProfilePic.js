@@ -50,7 +50,7 @@ class ProfilePic extends Component {
             <List.Item>
               <List.Header>{this.props.name}</List.Header>
               {this.props.user && this.props.user.id !== this.props.currentUser.id
-                ? <Button color={this.props.accepted ? 'teal' : this.props.requested ? 'green' : 'blue'} onClick={() => this.handleFriendRequests()}> {this.props.accepted ? 'Friends' : this.props.requested ? 'Request Pending' : 'Add Friend'} </Button>
+                ? <Button color={this.props.accepted ? 'teal' : this.props.requested || this.state.requested ? 'green' : 'blue'} onClick={() => this.handleFriendRequests()}> {this.props.accepted ? 'Friends' : this.props.requested || this.state.requested ? 'Request Pending' : 'Add Friend'} </Button>
                 : null
               }
             </List.Item>
