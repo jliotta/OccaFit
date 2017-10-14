@@ -30,7 +30,7 @@ class NotificationList extends Component {
     return (
       <Card.Group>
         {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
-          return <NotificationListEntry user={this.props.user} notification={notification} acceptFriendRequest={this.props.acceptFriendRequest} handleDeclineClick={this.props.handleDeclineClick}/>
+          return <NotificationListEntry user={this.props.user} notification={notification} acceptFriendRequest={this.props.acceptFriendRequest} handleDeclineClick={this.props.handleDeclineClick} accepted={this.props.accepted} declined={this.props.declined}/>
         }) : <Card.Content>No Notifications</Card.Content>}
       </Card.Group>
     )

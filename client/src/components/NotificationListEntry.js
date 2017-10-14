@@ -18,8 +18,8 @@ class NotificationListEntry extends Component {
         </Card.Content>
         <Card.Content>
           <Button.Group size="mini" attached="bottom">
-            <Button color={this.state.accepted ? 'teal' : 'green'} onClick={() => this.props.acceptFriendRequest(this.props.user, this.props.notification)}>{this.state.accepted ? 'Accepted!' : 'Accept'}</Button>
-            <Button color="red" onClick={() => this.props.handleDeclineClick(this.props.user, this.props.notification)}>Decline</Button>
+            <Button color={this.props.accepted ? 'teal' : 'green'} onClick={() => this.props.acceptFriendRequest(this.props.user, this.props.notification)}>{this.props.accepted ? 'Accepted!' : 'Accept'}</Button>
+            <Button color="red" onClick={() => this.props.handleDeclineClick(this.props.user, this.props.notification)}>{this.props.declined ? 'Declined!' : 'Decline'}</Button>
           </Button.Group>
         </Card.Content>
       </Card>
