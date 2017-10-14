@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card} from 'semantic-ui-react';
+import { Card, Item } from 'semantic-ui-react';
 import FriendEntry from './FriendEntry'
 
 class Friends extends Component {
@@ -22,7 +22,7 @@ class Friends extends Component {
 						friends: response
 			})
       })
-    
+
 	}
 
 	handleUserClick (userinfo) {
@@ -33,14 +33,17 @@ class Friends extends Component {
 		return (
 			<Card id="friends">
 				<Card.Content>
-				<Card.Header>Friends
-				</Card.Header>
+				<Card.Header>Friends</Card.Header>
+				</Card.Content>
+				<Card.Content>
+					<Item.Group divided relaxed>
 					{this.props.friends.map((user) =>
 						<FriendEntry
 						user={user}
 						key={user.id}
 						handleUserClick={this.handleUserClick}/>
 						)}
+					</Item.Group>
 				</Card.Content>
 			</Card>
 		)
