@@ -12,9 +12,13 @@ class MainNav extends Component {
       options: '',
       search: false,
       path: '',
+      accepted: null,
+      declined: null
     };
     this.searchUser = this.searchUser.bind(this);
     this.changeUser = this.changeUser.bind(this);
+    this.acceptFriendRequest = this.acceptFriendRequest.bind(this);
+    this.handleDeclineClick = this.handleDeclineClick.bind(this);
     console.log('MAIN NAV:', this)
   }
 
@@ -78,6 +82,9 @@ class MainNav extends Component {
       body: JSON.stringify({user1: otherUser, user2: currentUser})
     };
     fetch('/profile/accept', options);
+    this.setState({
+      accepted: true
+    })
   }
 
    handleDeclineClick(currentUser, otherUser) {
@@ -90,6 +97,9 @@ class MainNav extends Component {
       body: JSON.stringify({user1: otherUser, user2: currentUser})
     };
     fetch('/profile/decline', options);
+    this.setState({
+      declined: true
+    })
   }
 
   render() {
@@ -130,7 +140,7 @@ class MainNav extends Component {
             <Dropdown text="Notifications" className='link item' multiple selection search>
               <Dropdown.Menu>
                 <Dropdown.Item>
-                  <NotificationList user={this.props.user} acceptFriendRequest={this.acceptFriendRequest} handleDeclineClick={this.handleDeclineClick}/>
+                  <NotificationList user={this.props.user} acceptFriendRequest={this.acceptFriendRequest} handleDeclineClick={this.handleDeclineClick} accepted={this.state.accepted} declined={this.state.declined}/>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
