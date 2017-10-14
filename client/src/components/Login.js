@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Container, Grid, Header, Image, Segment, Button, Message, Transition } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
+import { Form, Grid, Header, Segment, Button, Message, Transition } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -39,8 +39,6 @@ class Login extends Component {
       body: JSON.stringify(payload)
     }
 
-    // console.log(this.props);
-
     fetch('/login', options)
       .then(response => {
         if (response.ok) {
@@ -59,7 +57,8 @@ class Login extends Component {
       }).then(user => {
         if (user && user[0].email) {
           this.props.authenticate(user[0]);
-          this.props.history.replace('/');                    
+          this.props.history.replace('/');
+          this.props.connectSocket();
         }
       });
   }
@@ -113,7 +112,7 @@ class Login extends Component {
 
                   <Button loading={this.state.submit} color='teal' fluid size='large'>Log In</Button>
                 </Segment>
-                <Message error 
+                <Message error
                          header={this.state.errorHeader}
                          content={this.state.errorContent}
                 />

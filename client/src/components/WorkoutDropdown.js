@@ -27,13 +27,10 @@ class WorkoutDropdown extends Component {
     var id = this.props.postingId;
 
     fetch(`/postings/requests/${id}`, { credentials: "include" })
-      .then(response => response.json())
-      .then(response => {
-        console.log('requests response #' + id, response);
-        this.setState({ requests: response })
-      })
-
-    console.log('getting posting requests');
+    .then(response => response.json())
+    .then(response => {
+      this.setState({ requests: response })
+    })
   }
 
   render() {

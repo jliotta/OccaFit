@@ -35,7 +35,6 @@ class Setup extends Component {
 		this.setState({
 			displaySetup: false
 		});
-    console.log(this.props.history);
 		this.props.history.goBack();
 	}
 
@@ -71,7 +70,6 @@ class Setup extends Component {
       activity: this.state.activity,
       userId: this.props.user.id
     }
-    console.log('here is my FORM DATA', inputs)
     //fetch to server as a post request
     var options = {
       headers: {
@@ -83,7 +81,6 @@ class Setup extends Component {
     }
     fetch('/setup', options)
       .then(results => {
-        console.log(results)
         this.closeDisplay();
       })
   }

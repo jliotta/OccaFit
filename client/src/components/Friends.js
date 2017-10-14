@@ -14,15 +14,14 @@ class Friends extends Component {
 
 	componentDidMount () {
 		fetch('/profile/friends', {credentials: 'include'})
-			.then(response => {
-				return response.json()
+		.then(response => {
+			return response.json()
+		})
+		.then(response => {
+  		this.setState({
+				friends: response
 			})
-      		.then(response => {
-          		this.setState({
-						friends: response
-			})
-      })
-
+    })
 	}
 
 	handleUserClick (userinfo) {

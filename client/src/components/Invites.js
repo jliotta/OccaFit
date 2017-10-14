@@ -16,12 +16,9 @@ class Invites extends Component {
         .then(
           response => {
             this.setState({ invites: response });
-            console.log(response);
           }
         )
       )
-
-    console.log('getting invites...')
   }
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];

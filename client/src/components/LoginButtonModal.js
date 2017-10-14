@@ -31,13 +31,9 @@ class LoginButtonModal extends Component {
       body: JSON.stringify(payload)
     }
 
-    console.log(payload);
-
     fetch('/login', options)
       .then(response => response.json())
       .then(function (data) {
-        console.log('response', data);
-        console.log(this.props);
         this.props.authenticate();
         this.setState({
           submit: false,
@@ -45,7 +41,7 @@ class LoginButtonModal extends Component {
           // open: false
         });
       }.bind(this))
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
 
 	};
 
@@ -61,17 +57,17 @@ class LoginButtonModal extends Component {
     var { fireRedirect } = this.state;
 
 		return (
-			<Modal open={this.state.open} dimmer='blurring' trigger={<Button onClick={this.handleModalOpen}>Login</Button>} 
+			<Modal open={this.state.open} dimmer='blurring' trigger={<Button onClick={this.handleModalOpen}>Login</Button>}
        onClose={this.handleModalClose} size='tiny' closeIcon>
        <Modal.Header>Log In</Modal.Header>
 
         <Modal.Content>
           <Form loading={this.state.submit} onSubmit={this.handleSubmit.bind(this)}>
-              <Form.Input icon='user' iconPosition='left' 
-                placeholder='Username or email address' 
+              <Form.Input icon='user' iconPosition='left'
+                placeholder='Username or email address'
                 label='Username' type='text' name='username' onChange={this.handleInputChange} />
-              <Form.Input icon='lock' iconPosition='left' 
-                placeholder='Password' label='Password' 
+              <Form.Input icon='lock' iconPosition='left'
+                placeholder='Password' label='Password'
                 type='password' name='password' onChange={this.handleInputChange} />
               <Form.Button style={{display: 'none'}}>Log In</Form.Button>
               {fireRedirect && (
@@ -86,7 +82,7 @@ class LoginButtonModal extends Component {
           </Button>
           <Button positive content="Log In" />
         </Modal.Actions>
-      </Modal>    
+      </Modal>
 		)
 	}
 }

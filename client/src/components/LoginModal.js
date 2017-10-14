@@ -5,7 +5,6 @@ class LoginModal extends Component {
 	state = {submit: false};
 
 	handleSubmit = () => {
-		console.log('submitting...');
 		this.setState({submit: true});
 	};
 
@@ -17,11 +16,11 @@ class LoginModal extends Component {
         <Modal.Header>Log In</Modal.Header>
           <Modal.Content>
             <Form error onSubmit={this.handleSubmit.bind(this)}>
-                <Form.Input icon='user' iconPosition='left' 
-                	placeholder='Username or email address' 
+                <Form.Input icon='user' iconPosition='left'
+                	placeholder='Username or email address'
                 	label='Username' type='text' />
-                <Form.Input icon='lock' iconPosition='left' 
-                	placeholder='Password' label='Password' 
+                <Form.Input icon='lock' iconPosition='left'
+                	placeholder='Password' label='Password'
                 	type='password' />
             </Form>
           </Modal.Content>

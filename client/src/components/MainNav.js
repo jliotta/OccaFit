@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LoginButtonModal from './LoginButtonModal.js';
-import { Menu, Input, Button, Dropdown, Card } from 'semantic-ui-react';
+// import LoginButtonModal from './LoginButtonModal.js';
+import { Menu, Button, Dropdown } from 'semantic-ui-react';
 import { NavLink, Link, Redirect } from 'react-router-dom';
 import NotificationList from './NotificationList.js';
 
@@ -35,9 +35,7 @@ class MainNav extends Component {
   };
 
   searchUser(event, data){
-    console.log('SEARCH USER DATA:', data);
     var userId = data.value;
-    console.log(new Redirect);
     var newPath = '/profile/' + userId;
     this.props.getUser(userId);
     this.props.getUserActivities(userId);

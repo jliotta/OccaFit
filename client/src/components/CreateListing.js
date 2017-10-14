@@ -34,8 +34,6 @@ class CreateListing extends Component {
     this.setState({submit: true});
     formData.date = new Date(formData.date).toISOString().slice(0, 19).replace('T', ' ');
 
-    console.log('create postings formdata', formData);
-
     var options = {
       headers: {
         'Content-Type': 'application/json'
@@ -235,8 +233,8 @@ class CreateListing extends Component {
                   { buddiesInput }
                 </Form.Group>
                 { detailsInput }
-                <Button loading={this.state.submit} color='teal' size='large' fluid>CREATE LISTING</Button>                                                                                                                                                          
-                <Message error 
+                <Button loading={this.state.submit} color='teal' size='large' fluid>CREATE LISTING</Button>
+                <Message error
                          header={this.state.errorHeader}
                          content={this.state.errorContent}
                 />
@@ -245,7 +243,7 @@ class CreateListing extends Component {
             </Grid.Column>
           </Grid>
         </div>
-      </Transition>   
+      </Transition>
     )
   }
 }

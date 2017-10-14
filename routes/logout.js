@@ -4,7 +4,12 @@ var db = require('../database/index.js');
 
 router.get('/', (req, res) => {
   req.session.destroy(function (err) {
-    if (!err) res.status(200).clearCookie('connect.sid').json({status: "Success"});
+
+    if (!err) {
+      // console.log('cookie:', req);
+      res.status(200).clearCookie('connect.sid').json({status: "Success"});
+    }
+
   })
 });
 

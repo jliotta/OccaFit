@@ -6,8 +6,9 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
 router.get('/', (req, res) => {
+  console.log('First Check Auth', req);
   if (req.user) {
-    res.json(req.user);
+    res.json({user: req.user, cookie: req.cookies, sessionID: req.sessionID, query: 0, _query: 0});
   } else {
     res.json({});
   }

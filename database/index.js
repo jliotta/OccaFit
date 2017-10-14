@@ -138,7 +138,8 @@ var getRequestsByPostingId = function(postingId, callback) {
 	var query = 'select r.postingId, r.userId, r.status, p.title,p.location, p.date, p.duration, u.name  from requests r join postings p on r.postingId = p.id join users u  on r.userId = u.id where r.postingId = ?';
 	connection.query(query, [postingId], (err, result) => {
 		if (err) {
-			console.log('error getting posting by userId');
+			console.error('error getting posting by userId');
+      callback(err, null);
 		} else {
 			callback(result);
 		}
@@ -151,7 +152,8 @@ var getUserRequestPostings = function(userId, callback) {
 	var query = 'select * from requests r left join postings p on r.postingId = p.id where r.status = "pending" and r.userId = ?';
 	connection.query(query, [userId], (err, result) => {
 		if (err) {
-			console.log('error getting requests by userId');
+			console.error('error getting requests by userId');
+      callback(err, null);
 		} else {
 			callback(result);
 		}
@@ -162,7 +164,8 @@ var createRequest = function(requestObj, callback) {
 	var query = 'INSERT INTO requests SET ?';
 	connection.query(query, requestObj, (err, result) => {
 		if (err) {
-			console.log('error creating request', err);
+			console.error('error creating request', err);
+      callback(err, null);
 		} else {
 			callback(result);
 		}
@@ -173,9 +176,10 @@ var createPair = function(requestObj, callback) {
 	var query = 'INSERT INTO requests SET ?';
 	connection.query(query, requestObj, (err, result) => {
 		if (err) {
-			console.log('error creating request');
+			console.error('error creating request');
+      callback(err);
 		} else {
-			console.log('created request:', result);
+			// console.log('created request:', result);
 			callback(result);
 		}
 	});
@@ -188,7 +192,8 @@ var getUserAcceptPostings = function(userId, callback) {
               INNER JOIN users ON result.userId = users.id`;
 	connection.query(query, [userId, 'accept'], (err, result) => {
 		if (err) {
-			console.log('error getting accepted requests');
+			console.error('error getting accepted requests');
+      callback(err);
 		} else {
 			callback(result);
 		}
@@ -200,7 +205,8 @@ var updateRequest = function(userId, callback) {
 	var query = "update requests set status = ? where userId=?";
 	connection.query(query, ['accept', userId], (err, result) => {
 		if (err) {
-			console.log('error updating reqest');
+			console.error('error updating reqest');
+      callback(err);
 		} else {
 			callback(result);
 		}
@@ -213,6 +219,7 @@ var getAboutMe = function(userid, callback) {
   connection.query(query, [userid], (err, result) => {
     if (err) {
       console.error('error updating request', err);
+      callback(err)
     } else {
       callback(result);
     }
@@ -222,12 +229,13 @@ var getAboutMe = function(userid, callback) {
 
 // insert new about me info for a userId
 var insertAboutMe = function(options, callback) {
-  console.log('IN INSERT ABOUT ME')
+  // console.log('IN INSERT ABOUT ME')
   var params = [options.email, options.city, options.state, options.activity, options.userId]
   var query = 'insert into profile (email, city, state, activity, userId) values (?, ?, ?, ?, ?)'
   connection.query(query, params, (err, result) => {
     if (err) {
-      console.log('error inserting about me', err);
+      console.error('error inserting about me', err);
+      callback(err);
     } else {
       callback(result);
     }
@@ -238,7 +246,8 @@ var friendList = function (userId, callback) {
   var query1 = `(SELECT userOneId from relationship WHERE userTwoId = ${userId} AND statusId = 1) Union (SELECT userTwoId from relationship WHERE userOneId = ${userId} AND statusId = 1)`;
   connection.query(query1, [userId, userId], function(err, result) {
     if(err) {
-      console.log('error on query 1 of friendlist');
+      console.error('error on query 1 of friendlist');
+      result(err);
     } else {
       callback(result);
     }
@@ -249,7 +258,8 @@ var friendRequest = function (user1Id, user2Id, callback) {
   var query = "INSERT INTO relationship (userOneId, userTwoId, statusId, actionId) VALUES (?, ?, 0, ?)";
   connection.query(query, [user1Id, user2Id, user1Id], function(err, result) {
     if(err) {
-      console.log('error making a friendrequest:', err);
+      console.error('error making a friendrequest');
+      callback(err);
     } else {
       console.log('request pending for friend request', result)
       callback(result);
@@ -261,9 +271,11 @@ var acceptFriendRequest = function (user1Id, user2Id, callback) {
   var query = "UPDATE relationship SET statusId = 1, actionId = ? WHERE userOneId = ? AND userTwoId = ?";
   connection.query(query, [user2Id, user1Id, user2Id], function(err, result) {
     if(err) {
-      console.log('error accepting friend request:', err);
+      console.error('error accepting friend request');
+      callback(err);
     } else {
-      callback(result)
+      // console.log('accepted friend request', result)
+      calllback(result)
     }
   });
 };
@@ -310,7 +322,8 @@ var updateAboutMe = function(options, callback) {
   var query = 'update profile set email = ?, city = ?, state = ? , activity = ? where userId = ?';
   connection.query(query, params, (err, result) => {
     if (err) {
-      console.log('error updating about me', err);
+      console.error('error updating about me', err);
+      callback(err);
     } else {
       callback(result);
     };
@@ -322,7 +335,8 @@ var getUsers = function(callback) {
   var query = 'select id, name from users';
   connection.query(query, (err, results) => {
     if (err) {
-      console.log('error getting all users', err)
+      console.error('error getting all users', err);
+      callback(error);
     } else {
       callback(results);
     };

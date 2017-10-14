@@ -16,12 +16,9 @@ class Requests extends Component {
         .then(
           response => {
             this.setState({ requests: response });
-            console.log(response);
           }
         )
       )
-
-    console.log('getting requests...')
   }
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
