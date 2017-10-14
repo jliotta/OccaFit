@@ -7,7 +7,6 @@ class NotificationListEntry extends Component {
     this.state {
       accepted: null,
       declined: null
-    }
   }
 
   handleAcceptance() {
