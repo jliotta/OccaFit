@@ -82,13 +82,13 @@ class Profile extends Component {
 		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
-				{this.props.user && this.props.currentProfile 
+				{this.props.user && this.props.currentProfile
 					? <ProfilePic user={this.props.currentProfile} currentUser={this.props.user} name={this.props.currentProfile && this.props.currentProfile.name} checkFriendStatus={this.props.checkFriendStatus} friendStatus={this.props.friendStatus} requested={this.props.requested} accepted={this.props.accepted}/>
 					: null
 				}
 				<Card.Group itemsPerRow={3}>
 					<Activities user={this.props.currentProfile} activities={this.props.activities}/>
-					<AboutMe user={this.props.currentProfile} info={this.props.info} showSetupModal={this.showSetupModal.bind(this)}/>
+					<AboutMe user={this.props.currentProfile} loggedIn={this.props.user} info={this.props.info} showSetupModal={this.showSetupModal.bind(this)}/>
 					<Friends friends={this.props.friends}/>
 				</Card.Group>
 			</Container>,

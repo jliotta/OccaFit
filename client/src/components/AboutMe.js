@@ -20,9 +20,9 @@ class AboutMe extends Component {
 						<Card.Description>Get to Know Me:</Card.Description>
 						{this.props.info ? <Card.Meta>{this.props.info.activity}</Card.Meta> : <Card.Meta>ADD YOUR INTERESTS</Card.Meta>}
 					</Card.Content>
-					<Card.Content>
+					{this.props.user && this.props.loggedIn && this.props.user.id === this.props.loggedIn.id ? <Card.Content>
 						<Button basic color='green' onClick={this.props.showSetupModal}>Edit</Button>
-					</Card.Content>
+					</Card.Content> : null}
 				</Card>
 		)
 	}
