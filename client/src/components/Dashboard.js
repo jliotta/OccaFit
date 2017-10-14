@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 
-import ProfilePic from './ProfilePic';
+import Picture from './Picture';
 import DashNav from './DashNav';
 import Workouts from './Workouts';
 import Requests from './Requests';
@@ -61,7 +61,6 @@ class Dashboard extends Component {
   }
 
   images = ['daniel.jpg', 'elliot.jpg', 'matthew.png', 'rachel.png'];
-
   user = '/' + this.images[Math.floor(Math.random() * this.images.length)];
 
   render() {
@@ -70,7 +69,7 @@ class Dashboard extends Component {
     return (
       <Container style={{marginTop: '20px'}}>
 
-        <ProfilePic user={this.user}/>
+        <Picture user={this.user}/>
 
         <DashNav handleClick={this.handleTabClick} view={this.state.view}/>
 

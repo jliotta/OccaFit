@@ -9,7 +9,6 @@ class ProfilePic extends Component {
       requested: false,
       status: null
     }
-    console.log('PROF PIC:', this);
   }
 
   componentDidMount() {
@@ -40,6 +39,7 @@ class ProfilePic extends Component {
   }
 
   render() {
+    console.log('PROF PIC:', this);
     return (
       <Container style={{margin: '30px'}}>
 
