@@ -28,8 +28,6 @@ class NotificationListEntry extends Component {
     }
   }
 
-
-
   render() {
     return (
       <Card color='blue'>
