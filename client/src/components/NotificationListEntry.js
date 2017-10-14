@@ -8,19 +8,6 @@ class NotificationListEntry extends Component {
       accepted: null,
       declined: null
     }
-    console.log('Notification Entry:', this);
-  }
-
-  handleFriendAcceptance(user1, user2) {
-    console.log('CLICKED ACCEPT')
-    this.props.acceptFriendRequest(user1, user2);
-  }
-
-  handleDecline() {
-    this.props.handleDeclineClick(this.props.notification);
-    this.setState({
-      accepted: true
-    });
   }
 
   render() {
@@ -31,8 +18,8 @@ class NotificationListEntry extends Component {
         </Card.Content>
         <Card.Content>
           <Button.Group size="mini" attached="bottom">
-            <Button color={this.state.accepted ? 'teal' : 'green'} onClick={() => this.handleFriendAcceptance(this.props.user, this.props.notification)}>{this.state.accepted ? 'Accepted!' : 'Accept'}</Button>
-            <Button basic color="blue" onClick={this.handleDecline}>Decline</Button>
+            <Button color={this.state.accepted ? 'teal' : 'green'} onClick={() => this.props.acceptFriendRequest(this.props.user, this.props.notification)}>{this.state.accepted ? 'Accepted!' : 'Accept'}</Button>
+            <Button color="red" onClick={() => this.props.handleDeclineClick(this.props.user, this.props.notification)}>Decline</Button>
           </Button.Group>
         </Card.Content>
       </Card>

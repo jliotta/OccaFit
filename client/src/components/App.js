@@ -134,7 +134,6 @@ class App extends Component {
     .then(data => data.json())
     .then(data => {
       if (data.length > 0) {
-        console.log('DATA:', data)
         this.setState({
           friendStatus: data[0].statusId
         });
@@ -143,12 +142,11 @@ class App extends Component {
             requested: true
           });
         } else if (this.state.friendStatus === 1) {
-          console.log('INSIDE ACCEPTED CHECK:', this);
           this.setState({
             accepted: true,
             requested: true
           })
-        } 
+        }
       } else {
         this.setState({
           friendStatus: null,

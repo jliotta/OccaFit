@@ -29,7 +29,7 @@ var createUser = function(userObj) {
 		        })
 		    });
 		});
-}
+};
 
 var checkUser = function(username, callback) {
 	var query = 'SELECT * from users WHERE email = ?';
@@ -50,7 +50,6 @@ var comparePassword = function(passwordEntered, hash, callback) {
 		if (err) throw err;
 		callback(null, isMatch)
 	});
-
 };
 
 var findById = function(id, callback) {
@@ -63,9 +62,8 @@ var findById = function(id, callback) {
 			//console.log('result of finding a id', dbResultArr[0]);
 			callback(null, dbResultArr[0]);
 		}
-	})
-
-}
+	});
+};
 
 var getWorkouts = function(id, callback) {
 	var query = 'select posting.*, requests.status, (posting.buddies - 1) as modified_buddies \
@@ -81,7 +79,7 @@ var getWorkouts = function(id, callback) {
 			callback(result);
 		}
 	});
-}
+};
 
 //get workout id, user associated with that posting
 var getSingleWorkout = function(postingId, callback){
@@ -218,8 +216,8 @@ var getAboutMe = function(userid, callback) {
     } else {
       callback(result);
     }
-  })
-}
+  });
+};
 
 
 // insert new about me info for a userId
@@ -233,8 +231,8 @@ var insertAboutMe = function(options, callback) {
     } else {
       callback(result);
     }
-  })
-}
+  });
+};
 
 var friendList = function (userId, callback) {
   var query1 = `(SELECT userOneId from relationship WHERE userTwoId = ${userId} AND statusId = 1) Union (SELECT userTwoId from relationship WHERE userOneId = ${userId} AND statusId = 1)`;
@@ -244,8 +242,7 @@ var friendList = function (userId, callback) {
     } else {
       callback(result);
     }
-  })
-
+  });
 };
 
 var friendRequest = function (user1Id, user2Id, callback) {
@@ -257,8 +254,7 @@ var friendRequest = function (user1Id, user2Id, callback) {
       console.log('request pending for friend request', result)
       callback(result);
     }
-  })
-
+  });
 };
 
 var acceptFriendRequest = function (user1Id, user2Id, callback) {
@@ -267,11 +263,20 @@ var acceptFriendRequest = function (user1Id, user2Id, callback) {
     if(err) {
       console.log('error accepting friend request:', err);
     } else {
-    	console.log('RESULT:', result)
-    	console.log('UPDATED FRIEND ACCEPT')
       callback(result)
     }
-  })
+  });
+};
+
+var declineFriendRequest = function (user1Id, user2Id, callback) {
+	var query = 'DELETE FROM relationship WHERE userOneId = ? AND userTwoId = ?';
+	connection.query(query, [user1Id, user2Id], function(err, result) {
+		if (err) {
+			console.log('error decling friend request:', err);
+		} else {
+			callback(result);
+		}
+	});
 };
 
 var checkFriendStatus = function(user1Id, user2Id, callback) {
@@ -280,7 +285,9 @@ var checkFriendStatus = function(user1Id, user2Id, callback) {
 		if (err) {
 			console.log('Error Checking Friend Status:', err);
 		} else {
+			console.log('CHECK RESULT:', result)
 			if (result.length === 0) {
+				console.log('QUERY:', query);
 				connection.query(query, [user2Id, user1Id], function(err, result) {
 					if (err) {
 						console.log('Error Checking Friend Status:', err);
@@ -291,9 +298,9 @@ var checkFriendStatus = function(user1Id, user2Id, callback) {
 			} else {
 				callback(result);
 			}
-		}
+		};
 	});
-}
+};
 
 
 
@@ -306,9 +313,9 @@ var updateAboutMe = function(options, callback) {
       console.log('error updating about me', err);
     } else {
       callback(result);
-    }
-  })
-}
+    };
+  });
+};
 
 // get all users
 var getUsers = function(callback) {
@@ -318,9 +325,9 @@ var getUsers = function(callback) {
       console.log('error getting all users', err)
     } else {
       callback(results);
-    }
-  })
-}
+    };
+  });
+};
 
 
 //get pending friend requests
@@ -331,9 +338,9 @@ var getPendingFriendRequests = function(id, callback) {
       console.log('error getting pending requests', err)
     } else {
       callback(results);
-    }
-  })
-}
+    };
+  });
+};
 //insert into postings (title, location, date, duration, details, meetup_spot, buddies, userId) values ('hike', 'sf', '2017-01-01 00:00:00', 1, 'hike in muir woods', 'parking', 2, 1);
 
 module.exports = {
@@ -360,5 +367,6 @@ module.exports = {
   friendRequest,
   checkFriendStatus,
   getPendingFriendRequests,
-  acceptFriendRequest
+  acceptFriendRequest,
+  declineFriendRequest
 };

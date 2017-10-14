@@ -76,8 +76,6 @@ class Profile extends Component {
 		this.props.getUserFriends(id);
 	}
 
-
-
 	render() {
 		console.log('CURRENT USER', this.props)
 		return (

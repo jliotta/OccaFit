@@ -80,6 +80,18 @@ class MainNav extends Component {
     fetch('/profile/accept', options);
   }
 
+   handleDeclineClick(currentUser, otherUser) {
+    var options = {
+      credentials: 'include',
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({user1: otherUser, user2: currentUser})
+    };
+    fetch('/profile/decline', options);
+  }
+
   render() {
     return (
       <Menu secondary size='huge' style={{marginBottom: 0}}>
@@ -118,7 +130,7 @@ class MainNav extends Component {
             <Dropdown text="Notifications" className='link item' multiple selection search>
               <Dropdown.Menu>
                 <Dropdown.Item>
-                  <NotificationList user={this.props.user} acceptFriendRequest={this.acceptFriendRequest} />
+                  <NotificationList user={this.props.user} acceptFriendRequest={this.acceptFriendRequest} handleDeclineClick={this.handleDeclineClick}/>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
