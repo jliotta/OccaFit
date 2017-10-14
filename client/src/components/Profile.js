@@ -5,6 +5,7 @@ import Friends from './Friends';
 import ProfilePic from './ProfilePic';
 import Setup from './Setup';
 import { Container, Card } from 'semantic-ui-react';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 class Profile extends Component {
 	constructor(props) {
