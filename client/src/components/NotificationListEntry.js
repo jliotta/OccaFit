@@ -4,7 +4,7 @@ import { Menu, Input, Button, Dropdown, Card } from 'semantic-ui-react';
 class NotificationListEntry extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state {
       accepted: null,
       declined: null
     }
@@ -27,8 +27,6 @@ class NotificationListEntry extends Component {
       this.props.handleDeclineClick(this.props.user, this.props.notification)
     }
   }
-
-
 
   render() {
     return (
