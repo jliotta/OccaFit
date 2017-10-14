@@ -77,7 +77,6 @@ class Profile extends Component {
 	}
 
 	render() {
-		console.log('CURRENT USER', this.props)
 		return (
 			[<Container style={{marginTop: '20px'}} id="profile">
 				{this.props.user && this.props.currentProfile

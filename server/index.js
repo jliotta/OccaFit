@@ -9,10 +9,12 @@ var passport = require('passport');
 var db = require('../database/index.js');
 var flash = require('connect-flash');
 var LocalStrategy = require('passport-local').Strategy;
-
-console.log('db server', process.env.DBSERVER);
-console.log('db user', process.env.DBUSER);
-console.log('db password', process.env.DBPASSWORD);
+var socketIo = require('socket.io');
+var http = require('http');
+var auth = require('./middleware/auth.js');
+var passportSocketIo = require('./middleware/passportSocketIo.js');
+var sharedSession = require("express-socket.io-session");
+var cors = require('cors');
 
 var options = {
   host: process.env.DBSERVER || 'localhost',
@@ -24,11 +26,24 @@ var options = {
   expiration: 3600000,
 }
 
+// This creates a sessions database table automatically
+// using the options shown above.
 var sessionStore = new MYSQLStore(options);
+// console.log('SESSION STORE',sessionStore)
+var sessionMiddleware = session({
+    key: 'connect.sid',
+    secret: 'secret',
+    store: sessionStore,
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 3600000 }
+});
 
 var app = express();
 app.use(morgan('dev'));
+app.use(cors());
 
+// These store the route pathing into variables to be used below
 var routeRegister = require('../routes/register');
 var routeLogin = require('../routes/login');
 var routePostings = require('../routes/postings');
@@ -40,50 +55,121 @@ var routeSetup = require('../routes/setup');
 var routeSearch = require('../routes/search');
 var routeNotifications = require('../routes/notifications');
 
-
-
+// These process cookie, session, and authentication
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 app.use(express.static('build'));
-app.use(session({
-    secret: 'secret',
-    store: sessionStore,
-    saveUninitialized: false,
-    resave: false,
-    cookie: { maxAge: 3600000}
-}));
+// console.log('Session MIDDLE WARE', sessionMiddleware);
+app.use(sessionMiddleware);
+
+// Passport inits
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+
+// app.listen(process.env.PORT || 3001, function(err){
+// 	if(err) {
+// 		console.log('cannot connect to the server');
+// 	}
+// 	console.log(`listening on ${process.env.PORT || 3001}`);
+// })
+
+// This creates a socketIO listener so that clients and server can connect
+var server = http.createServer(app);
+var io = socketIo.listen(server);
+// var io = socketIo(app);
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, {}, next);
+})
+
+
+
+// Purely development Purposes
+// app.use(function (req, res, next) {
+//   console.log('body', req.body);
+//   console.log('session', req.session);
+//   console.log('isAuth?', req.isAuthenticated());
+//   console.log('req user:', req.user);
+//   console.log('cookie', req.cookies);
+//   next();
+// })
+
+// These routes do NOT require authentications
 app.use('/register', routeRegister);
 app.use('/setup', routeSetup);
 app.use('/login', routeLogin);
 app.use('/search', routeSearch);
 app.use('/notification', routeNotifications);
 app.use('/postings', routePostings);
-app.use(checkAuth);
+
+// The authentication check happens here, and beyond this point are all the
+// routes that require authentication, or else redirects to 401
+app.use(auth.checkAuth);
 
 // Below are the protected routes
-
+// console.log('about to go to PROFILE')
 app.use('/profile', routeProfile);
 app.use('/workout', routeWorkout);
 app.use('/dashboard', routeDashboard);
 app.use('/logout', routeLogout);
 
-// middleware function to check if this is one of the protected routes
 
-function checkAuth(req, res, next) {
-  if (req.isAuthenticated()) { //check if it's an authenticated route
-    next();
-  }
-  else {
-    res.status(401).json({});
-  }
+// https://www.codementor.io/tips/0217388244/sharing-passport-js-sessions-with-both-express-and-socket-io
+// Socket Connection
+io.use(passportSocketIo.authorize({
+  key: 'connect.sid',
+  secret: 'secret',
+  store: sessionStore,
+  success: onAuthorizeSuccess,
+  fail: onAuthorizeFail,
+  query: 0,
+  _query: 0 // These are useless, delete later
+}))
+
+function onAuthorizeSuccess(data, accept) {
+  console.log('successful connection to socket.io');
+  accept();
 }
 
+function onAuthorizeFail(data, message, error, accept) {
+  console.log('failed to connect to socket.io message', message)
+  accept(new Error(message))
+  // accept();
+}
+
+// io.on('connection', socket => {
+//   console.log('WE CONNECTED');
+//   var userId = socket.request.session.passport.user;
+//   console.log('Your ID is:', userId);
+// })
+
+const clients = [];
+io.on('connection', socket => {
+  //Events to listen for, Change in Event, Change in
+  socket.emit('hello', 'SUP CLIENT');
+  clients.push(socket);
+  socket.on('connect', data => {
+    socket.emit('hello', 'HI CLIENT~!')
+  })
+  socket.on('hello', data => {
+    clients.forEach(client => {
+      if (client.id !== socket.id) {
+        client.emit('hello', 'Hello user:' + client.id + ' from ' + socket.id);
+      }
+    })
+    // socket.emit('hello', 'Hi Client!');
+  })
+  socket.on('friendRequest', () => {
+
+  });
+  socket.on('disconnect', () => console.log('Client Disconnected'));
+});
 
 
-app.listen(process.env.PORT || 3001, function(err){
+
+server.listen(process.env.PORT || 3001, function(err){
 	if(err) {
 		console.log('cannot connect to the server');
 	}

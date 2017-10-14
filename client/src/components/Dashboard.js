@@ -26,15 +26,14 @@ class Dashboard extends Component {
     fetch('/dashboard', { credentials: "include" })
       .then(response => response.json())
       .then(response => {
-        console.log('response', response);
+
         this.setState({ data: response })
       })
 
-    console.log('getting data...')
   }
 
   update = (userid) => {
-    console.log(userid);
+
     fetch(`/postings/accept/${userid}`, { method: "PATCH" })
       .then(response => {
         var newVar = !this.state.var;
@@ -47,15 +46,13 @@ class Dashboard extends Component {
     fetch(`/postings/requests/${id}`, { credentials: "include" })
       .then(response => response.json())
       .then(response => {
-        console.log('requests response #' + id, response);
+
         this.setState({ requests: response })
       })
 
-    console.log('getting posting requests');
   }
 
   handleTabClick(e, { name }) {
-    // console.log('I\'ve been clicked, and my name is: ' + name);
     this.setState({ view: name });
   };
 
@@ -68,7 +65,7 @@ class Dashboard extends Component {
   user = '/' + this.images[Math.floor(Math.random() * this.images.length)];
 
   render() {
-    var { listings } = this.props;
+    // var { listings } = this.props;
 
     return (
       <Container style={{marginTop: '20px'}}>
@@ -80,7 +77,7 @@ class Dashboard extends Component {
         {this.state.view === 'my workouts' && (<Workouts data={this.state.data} user={this.user} update={this.update} dataPull={this.dataPull} />)}
         {this.state.view === 'my requests' && ([<Requests />])}
         {this.state.view === 'upcoming workouts' && ([<Invites />])}
-        
+
       </Container>
     )
   }

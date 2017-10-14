@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input } from 'formsy-semantic-ui-react';
-import { Container, Grid, Header, Image, Segment, Button, Transition, Label, Message } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
+import { Grid, Header, Button, Transition, Label, Message } from 'semantic-ui-react';
+
 
 const styles = {
   root: {
@@ -60,7 +60,7 @@ class Signup extends Component {
   };
 
   render() {
-    const errorLabel = <Label color="red" pointing/>;
+    // const errorLabel;
 
     const nameInput = (
       <Input
@@ -171,8 +171,8 @@ class Signup extends Component {
                   { passwordInput }
                   { passwordConfirmInput }
                 </Form.Group>
-                <Button loading={this.state.submit} color='teal' size='large' fluid>CREATE AN ACCOUNT</Button>                                                                                                                                                          
-                <Message error 
+                <Button loading={this.state.submit} color='teal' size='large' fluid>CREATE AN ACCOUNT</Button>
+                <Message error
                          header={this.state.errorHeader}
                          content={this.state.errorContent}
                 />

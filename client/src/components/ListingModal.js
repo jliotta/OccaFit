@@ -25,12 +25,11 @@ class ListingModal extends Component {
 
   render() {
     var { listing, open, hideListingModal, userImage, user } = this.props;
-    console.log('listing modal user', user);
 
     return (
       <Modal open={open} onClose={hideListingModal} closeIcon dimmer='blurring'>
         <Modal.Header>{listing.title}</Modal.Header>
-        
+
         <Modal.Content image scrolling>
           <Image
             size='small'

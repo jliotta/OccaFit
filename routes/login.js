@@ -4,12 +4,12 @@ var db = require('../database/index.js');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
-
-
+var socketIo = require('socket.io');
+var http = require('http');
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    db.checkUser(username, function (err, dbUserResult) { 
+    db.checkUser(username, function (err, dbUserResult) {
       if (err) { return done(err); }
       if (!dbUserResult) { return done(null, false); }
       db.comparePassword(password, dbUserResult[0].password, function(err, isMatch){
@@ -24,17 +24,11 @@ passport.use(new LocalStrategy(
           return done(null, false, {message: 'invalid password'});
         }
       });
-  
-      
   });
-    
 }));
 
-
-
-
 passport.serializeUser(function(user, done) {
-  //console.log('user in serialize', user);
+  // console.log('user in serialize', user);
   done(null, user[0].id);
 });
 
@@ -45,22 +39,17 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
 // on success login, redirect to dashboards
-// successRedirect:'/', 
+// successRedirect:'/',
 
 // on successful login
 router.post('/',
   passport.authenticate('local', {failureFlash: true, successFlash: true}),
-  
-
   function(req, res) {
+
     res.json(req.user);
-});
-
-
-
-
+  }
+);
 
 router.get('/', (req, res) => {
   //console.log('login get')
@@ -69,4 +58,4 @@ router.get('/', (req, res) => {
 
 module.exports = router;
 //create register
-//login 
+//login
