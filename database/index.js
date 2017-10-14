@@ -75,8 +75,9 @@ var getWorkouts = function(id, callback) {
 	connection.query(query, [id], (err, result) => {
 		if (err) {
 			console.error('Error getting postings', err);
+      callback(err, null)
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -87,8 +88,9 @@ var getSingleWorkout = function(postingId, callback){
 	connection.query(query, [postingId], (err, result) => {
 		if (err) {
 			console.log('error getting single posting');
+      callback(err, null)
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -100,8 +102,9 @@ var createWorkout = function(workoutObj, callback) {
 	connection.query(query, workoutObj, (err, result) => {
 		if (err) {
 			console.log('error creating workout', err);
+      callback(err, null)
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -111,8 +114,9 @@ var createProfile = function(profileObj, callback) {
 	connection.query(query, profileObj, (err, result) => {
 		if (err) {
 			console.log('error creating profile');
+      callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -128,8 +132,9 @@ var getUserPostings = function(userId, callback) {
 	connection.query(query, [userId], (err, result) => {
 		if (err) {
 			console.log('error getting posting by userId', err);
+      callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -141,7 +146,7 @@ var getRequestsByPostingId = function(postingId, callback) {
 			console.error('error getting posting by userId');
       callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -155,7 +160,7 @@ var getUserRequestPostings = function(userId, callback) {
 			console.error('error getting requests by userId');
       callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -167,7 +172,7 @@ var createRequest = function(requestObj, callback) {
 			console.error('error creating request', err);
       callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -177,10 +182,10 @@ var createPair = function(requestObj, callback) {
 	connection.query(query, requestObj, (err, result) => {
 		if (err) {
 			console.error('error creating request');
-      callback(err);
+      callback(err, null);
 		} else {
 			// console.log('created request:', result);
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -193,9 +198,9 @@ var getUserAcceptPostings = function(userId, callback) {
 	connection.query(query, [userId, 'accept'], (err, result) => {
 		if (err) {
 			console.error('error getting accepted requests');
-      callback(err);
+      callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -206,9 +211,9 @@ var updateRequest = function(userId, callback) {
 	connection.query(query, ['accept', userId], (err, result) => {
 		if (err) {
 			console.error('error updating reqest');
-      callback(err);
+      callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -219,9 +224,9 @@ var getAboutMe = function(userid, callback) {
   connection.query(query, [userid], (err, result) => {
     if (err) {
       console.error('error updating request', err);
-      callback(err)
+      callback(err, null)
     } else {
-      callback(result);
+      callback(null, result);
     }
   });
 };
@@ -235,9 +240,9 @@ var insertAboutMe = function(options, callback) {
   connection.query(query, params, (err, result) => {
     if (err) {
       console.error('error inserting about me', err);
-      callback(err);
+      callback(err, null);
     } else {
-      callback(result);
+      callback(null, result);
     }
   });
 };
@@ -247,9 +252,9 @@ var friendList = function (userId, callback) {
   connection.query(query1, [userId, userId], function(err, result) {
     if(err) {
       console.error('error on query 1 of friendlist');
-      // result(err);
+      callback(err, null);
     } else {
-      callback(result);
+      callback(null, result);
     }
   });
 };
@@ -259,10 +264,10 @@ var friendRequest = function (user1Id, user2Id, callback) {
   connection.query(query, [user1Id, user2Id, user1Id], function(err, result) {
     if(err) {
       console.error('error making a friendrequest');
-      callback(err);
+      callback(err, null);
     } else {
       console.log('request pending for friend request', result)
-      callback(result);
+      callback(null, result);
     }
   });
 };
@@ -272,10 +277,10 @@ var acceptFriendRequest = function (user1Id, user2Id, callback) {
   connection.query(query, [user2Id, user1Id, user2Id], function(err, result) {
     if(err) {
       console.error('error accepting friend request');
-      callback(err);
+      callback(err, null);
     } else {
       // console.log('accepted friend request', result)
-      callback(result)
+      callback(null, result)
     }
   });
 };
@@ -285,8 +290,9 @@ var declineFriendRequest = function (user1Id, user2Id, callback) {
 	connection.query(query, [user1Id, user2Id], function(err, result) {
 		if (err) {
 			console.log('error decling friend request:', err);
+      callback(err, null);
 		} else {
-			callback(result);
+			callback(null, result);
 		}
 	});
 };
@@ -296,6 +302,7 @@ var checkFriendStatus = function(user1Id, user2Id, callback) {
 	connection.query(query, [user1Id, user2Id], function(err, result) {
 		if (err) {
 			console.log('Error Checking Friend Status:', err);
+      callback(err, null)
 		} else {
 			console.log('CHECK RESULT:', result)
 			if (result.length === 0) {
@@ -304,11 +311,11 @@ var checkFriendStatus = function(user1Id, user2Id, callback) {
 					if (err) {
 						console.log('Error Checking Friend Status:', err);
 					} else {
-						callback(result);
+						callback(null, result);
 					}
 				});
 			} else {
-				callback(result);
+				callback(null, result);
 			}
 		};
 	});
@@ -323,9 +330,9 @@ var updateAboutMe = function(options, callback) {
   connection.query(query, params, (err, result) => {
     if (err) {
       console.error('error updating about me', err);
-      callback(err);
+      callback(err, null);
     } else {
-      callback(result);
+      callback(null, result);
     };
   });
 };
@@ -336,9 +343,9 @@ var getUsers = function(callback) {
   connection.query(query, (err, results) => {
     if (err) {
       console.error('error getting all users', err);
-      callback(error);
+      callback(err, null);
     } else {
-      callback(results);
+      callback(null, results);
     };
   });
 };
@@ -350,8 +357,9 @@ var getPendingFriendRequests = function(id, callback) {
   connection.query(query, [id], (err, results) => {
     if (err) {
       console.log('error getting pending requests', err)
+      callback(err, null)
     } else {
-      callback(results);
+      callback(null, results);
     };
   });
 };
