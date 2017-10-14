@@ -10,7 +10,7 @@ class Listings extends Component {
 
     this.state = {
       visible: false,
-      listings: [],
+      listings: null,
       showModal: false,
       selectedListing: null
     }
@@ -53,7 +53,7 @@ class Listings extends Component {
       [<Transition visible={this.state.visible} duration={1000} animation='fade'>
         <Container style={{marginTop: '20px'}}>
           <Card.Group itemsPerRow={3}>
-            {listings.map(listing => (
+            {this.state.listings && this.state.listings.map(listing => (
 
               <ListingCard listing={listing} showListingModal={this.showListingModal.bind(this)}
                            user={'/' + this.images[Math.floor(Math.random() * this.images.length)]}

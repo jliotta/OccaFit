@@ -4,11 +4,11 @@ var db = require('../database/index.js');
 
 // we will add the routes for a particular user id
 // get all the workouts posted by the user - select * from postings where userId = "x"
-// 
+//
 
 router.get('/', (req, res) => {
   var id = req.session.passport.user;
-  db.getUserPostings(id, (dbResult) => {
+  db.getUserPostings(id, (err, dbResult) => {
     res.send(dbResult);
   })
 })
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.get('/requests', (req, res) => {
   var id = req.session.passport.user;
   // will need user id and workout posting id
-  db.getUserRequestPostings(id, (dbResult) => {
+  db.getUserRequestPostings(id, (err, dbResult) => {
     res.send(dbResult);
   })
 })
@@ -27,7 +27,7 @@ router.get('/requests', (req, res) => {
 router.get('/accepted', (req,res) => {
   var id = req.session.passport.user;
   // will need user id and workout posting id
-  db.getUserAcceptPostings(id, (dbResult) => {
+  db.getUserAcceptPostings(id, (err, dbResult) => {
     res.send(dbResult);
   })
 });
@@ -40,4 +40,3 @@ router.get('/accepted', (req,res) => {
 
 
 module.exports = router;
-

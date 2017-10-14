@@ -6,20 +6,24 @@ var db = require('../database/index.js');
 router.get('/', (req, res) => {
   var id = req.user ? req.user.id : null;
 
-  db.getWorkouts(id, (result) => {
-    res.status(200).json(result);
+  db.getWorkouts(id, (err, result) => {
+    if (err) {
+      res.status(401);
+    } else {
+      res.status(200).json(result);
+    }
   });
 });
 
 
 router.post('/', (req, res) => {
   var workoutObj = {
-    title: req.body.title, 
-    location: req.body.location, 
-    date: req.body.date, 
-    duration: req.body.duration, 
-    details: req.body.details, 
-    meetup_spot: req.body.meetup_point, 
+    title: req.body.title,
+    location: req.body.location,
+    date: req.body.date,
+    duration: req.body.duration,
+    details: req.body.details,
+    meetup_spot: req.body.meetup_point,
     buddies: req.body.buddies,
     userId: req.user.id
   };
@@ -27,7 +31,7 @@ router.post('/', (req, res) => {
   db.createWorkout(workoutObj, (err, dbResult) => {
     res.status(201).send(dbResult);
   })
-  
+
 });
 
 router.get('/:id', (req, res) => {
@@ -39,9 +43,13 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/requests/:id', (req, res) => {
-  db.getRequestsByPostingId(req.params.id, (result) => {
+  db.getRequestsByPostingId(req.params.id, (err, result) => {
     //console.log('result of the get for a single workout', result);
-    res.status(200).json(result);
+    if (err) {
+      res.status(401);
+    } else {
+      res.status(200).json(result);
+    }
   });
 });
 
@@ -53,17 +61,26 @@ router.post('/:id', (req, res) => {
     userId: id,
     status: 'pending'
   }
-  db.createRequest(reqObj, (result) => {
+  db.createRequest(reqObj, (err, result) => {
     //console.log('request created in the table', result);
-    res.status(200).send('request created');
+    if (err) {
+      res.status(401);
+    } else {
+      res.status(200).send('request created');
+    }
   });
 });
 
 router.patch('/accept/:id', (req, res) => {
   var id = req.params.id;
-  db.updateRequest(id, (result) => {
+  db.updateRequest(id, (err, result) => {
     //console.log('request created in the table', result);
-    res.status(200).send('request accepted');
+    if (err) {
+      res.status(401);
+    } else {
+      res.status(200).send('request accepted');
+    }
+
   });
 });
 

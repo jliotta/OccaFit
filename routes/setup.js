@@ -4,17 +4,31 @@ var db = require('../database/index.js');
 
 router.post('/', (req, res) => {
   var options = req.body;
-  
-  db.getAboutMe(options.userId, results => {
-    if (results.length === 0) {
-      db.insertAboutMe(options, (result) => {
-        res.send(result)
-      })
+
+  db.getAboutMe(options.userId, (err, results) => {
+
+    if (err) {
+      console.err('error', err);
     } else {
-      db.updateAboutMe(options, (result) => {
-        res.send(result)
-      })
+      if (results.length === 0) {
+        db.insertAboutMe(options, (err, result) => {
+          if (err) {
+            res.status(401);
+          } else {
+            res.send(result);
+          }
+        })
+      } else {
+        db.updateAboutMe(options, (err, result) => {
+          if (err) {
+            res.status(401);
+          } else {
+            res.send(result);
+          }
+        })
+      }
     }
+
   })
 })
 

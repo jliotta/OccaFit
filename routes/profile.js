@@ -19,8 +19,13 @@ router.get('/about', (req, res) => {
   // get user id from the req
   var id = req.headers.user;
 
-  db.getAboutMe(id, (result) => {
-    res.send(result)
+  db.getAboutMe(id, (err, result) => {
+    if (err) {
+      console.err('err getting about me info', err)
+    } else {
+      console.log(result)
+      res.send(result)
+    }
   })
 })
 
@@ -28,14 +33,22 @@ router.get('/activities', (req, res) => {
   // Get all of this user's data
   // Get all of the upcoming events for this user also
   // Display them in chronological order
-  db.getUserPostings(req.headers.user, userPosts => {
-    db.getUserAcceptPostings(req.headers.user, acceptedPosts => {
-      var activities = {
-        hosted: userPosts,
-        attended: acceptedPosts
-      };
-      res.send(activities);
-    })
+  db.getUserPostings(req.headers.user, (err, userPosts) => {
+    if (err) {
+      res.status(401);
+    } else {
+      db.getUserAcceptPostings(req.headers.user, (err, acceptedPosts) => {
+        if (err) {
+          res.status(401);
+        } else {
+          var activities = {
+            hosted: userPosts,
+            attended: acceptedPosts
+          };
+          res.send(activities);
+        }
+      })
+    }
   })
   //
   // db.getUserAcceptPostings()
@@ -51,10 +64,13 @@ router.post('/', (req, res) => {
     userId: id
   };
 
-  db.createProfile(profileObj, (result) => {
+  db.createProfile(profileObj, (err, result) => {
     //console.log('created profile');
-
-    res.redirect('/postings');
+    if (err) {
+      res.status(401)
+    } else {
+      res.redirect('/postings');
+    }
   });
 });
 
@@ -62,51 +78,71 @@ router.get('/relationship', (req, res) => {
   var currentUser = req.headers.currentuser;
   var otherUser = req.headers.otheruser;
   if (currentUser !== otherUser) {
-    db.checkFriendStatus(currentUser, otherUser, (data) => {
-      res.send(data);
+    db.checkFriendStatus(currentUser, otherUser, (err, data) => {
+      if (err) {
+        res.status(401);
+      } else {
+        res.send(data);
+      }
     });
   }
 });
 
 router.patch('/accept', (req, res) => {
-  db.acceptFriendRequest(req.body.user1.userOneId, req.body.user2.id, (data) => {
-    res.send(data);
+  db.acceptFriendRequest(req.body.user1.userOneId, req.body.user2.id, (err, data) => {
+    if (err) {
+      res.status(401);
+    } else {
+      res.send(data);
+    }
   });
 });
 
 router.patch('/decline', (req, res) => {
    console.log('INSIDE Decline:', req.body);
-   db.declineFriendRequest(req.body.user1.userOneId, req.body.user2.id, (data) => {
-     res.send(data);
+   db.declineFriendRequest(req.body.user1.userOneId, req.body.user2.id, (err, data) => {
+     if (err) {
+       res.status(401);
+     } else {
+       res.send(data);
+     }
    });
 });
 
 router.get('/friends', (req, res) => {
   //Send back user data of the current users friends
   var userId = req.headers.user
-  db.friendList(userId, (result)=> {
-    Promise.all(result.map(function(el) {
-        return new Promise ((resolve, reject) => {
-          var id = el.userOneId;
-          db.findById(id, (err, result) => {
-            if(err) {
-              reject(err);
-            }else {
-              resolve(result);
-            }
-          });
-        })
-    })).then(result => {
+  db.friendList(userId, (err, result)=> {
+    if (err) {
+      res.status(401);
+    } else {
+      Promise.all(result.map(function(el) {
+          return new Promise ((resolve, reject) => {
+            var id = el.userOneId;
+            db.findById(id, (err, result) => {
+              if(err) {
+                reject(err);
+              }else {
+                resolve(result);
+              }
+            });
+          })
+      })).then(result => {
 
-      res.send(result);
-    })
+        res.send(result);
+      })
+    }
 
   })
 });
 
 router.post('/friends', (req, res) => {
-  db.friendRequest(req.body.currentUser, req.body.otherUser, (data) => {
-    res.send(data);
+  db.friendRequest(req.body.currentUser, req.body.otherUser, (err, data) => {
+    if (err) {
+      res.status(401);
+    } else {
+      res.send(data);
+    }
   });
 });
 
