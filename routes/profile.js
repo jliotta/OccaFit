@@ -68,11 +68,16 @@ router.get('/relationship', (req, res) => {
 });
 
 router.patch('/accept', (req, res) => {
-  console.log('INSIDE PATCH:', req.body);
   db.acceptFriendRequest(req.body.user1.userOneId, req.body.user2.id, (data) => {
-    console.log('GOT THE DATA!! ACCEPT')
     res.send(data);
   });
+});
+
+router.patch('/decline', (req, res) => {
+   console.log('INSIDE Decline:', req.body);
+   db.declineFriendRequest(req.body.user1.userOneId, req.body.user2.id, (data) => {
+     res.send(data);
+   });
 });
 
 router.get('/friends', (req, res) => {

@@ -22,25 +22,16 @@ class NotificationList extends Component {
       })
   }
 
-  handleAcceptClick(requestor) {
-    console.log('I clicked ACCEPT on friend request from', requestor.name)
-  }
-
-  handleDeclineClick(requestor) {
-    console.log('I clicked DECLINE on friend request from', requestor.name)
-  }
-
   componentWillMount() {
     this.getPendingRequests();
   }
 
   render() {
-    console.log('NOTIFICATIONS', this.state.notifications)
     return (
       <Card.Group>
         {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
-          return <NotificationListEntry notification={notification} handleAcceptClick={this.handleAcceptClick.bind(this)} handleDeclineClick={this.handleDeclineClick.bind(this)}/>
-        }) : <Card> <Card.Content>No Notifications Right Now</Card.Content> </Card>}
+          return <NotificationListEntry user={this.props.user} notification={notification} acceptFriendRequest={this.props.acceptFriendRequest} handleDeclineClick={this.props.handleDeclineClick}/>
+        }) : <Card.Content>No Notifications</Card.Content>}
       </Card.Group>
     )
   }
