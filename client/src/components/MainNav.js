@@ -115,7 +115,7 @@ class MainNav extends Component {
                 <Dropdown.Item onClick={this.props.signoff} as={Link} to='/'>Log Out</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>,
-            <Dropdown text="Notifications" className='link item' multiple>
+            <Dropdown text="Notifications" className='link item' pointing>
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <NotificationList user={this.props.user} acceptFriendRequest={this.acceptFriendRequest} />
